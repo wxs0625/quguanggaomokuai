@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 当前分支：`main`
-- 当前推荐版本：`v4.9/全能去广告修复版-Shadowrocket-v4.9.sgmodule`
+- 当前推荐版本：`v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
 - 当前远端地址：`https://github.com/wxs0625/quguanggaomokuai.git`
 - 上传方式：普通 Git HTTPS 远端。
 - 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
@@ -34,8 +34,8 @@ git push -u origin main
 ## 当前可用链接
 
 - GitHub 仓库页：`https://github.com/wxs0625/quguanggaomokuai`
-- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.9/全能去广告修复版-Shadowrocket-v4.9.sgmodule`
-- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.9/全能去广告修复版-Shadowrocket-v4.9.sgmodule`
+- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
+- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
 
 说明：Raw 订阅链接可用于 Shadowrocket 远程模块导入。
 
@@ -57,3 +57,10 @@ git push -u origin main
 - 闪动校园：暂停闪动校园相关启动阶段响应体改写，从 MITM 主机列表移除相关广告 SDK 域名，并移除快手开放广告脚本匹配，优先修复启动页卡住和闪退。
 - 百度网盘：继续沿用 v4.8 开屏广告补强规则。
 - 规则状态：v4.9 已生成，并随本次提交同步到 GitHub。
+
+## v4.10 最新修复
+
+- 闪动校园：改为完全直连稳定版，在 `[Rule]` 顶部加入闪动校园核心域名和启动 SDK 域名 `DIRECT` 白名单。
+- 闪动校园：清理相关 URL Rewrite、Map Local、Script 和 MITM 主机命中项，避免通用规则继续误伤启动或联网。
+- 百度网盘：继续沿用 v4.8 开屏广告补强规则。
+- 规则状态：v4.10 已生成，并随本次提交同步到 GitHub。
