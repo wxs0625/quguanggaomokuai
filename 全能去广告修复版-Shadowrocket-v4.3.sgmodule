@@ -1,11 +1,11 @@
-#!name=全能去广告修复版 - Shadowrocket v4.2
-#!desc=v4.2 中文命名发布版：基于 fmz200 README-RULE 汇总，修复闪动校园闪退并保留广告 SDK 脚本处理
+#!name=全能去广告修复版 - Shadowrocket v4.3
+#!desc=v4.3 单文件发布版：基于 fmz200 README-RULE 汇总，内置闪动校园兼容修复
 #!author=fmz200，wxs0625，本地修复
 #!homepage=https://github.com/fmz200/wool_scripts
 #!icon=https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/gif/naisi-01.gif
 #!date=2026-08-13
 
-# v4.2：中文命名发布版；沿用 v4.1 规则主体，并保留闪动校园兼容修复
+# v4.3：单文件发布版；删除单独闪动校园发布模块，修复内容已内置在主模块
 
 [Rule]
 AND, ((DOMAIN-KEYWORD, -ad-), (DOMAIN-SUFFIX, byteimg.com)), REJECT
