@@ -1,3 +1,12 @@
+# v4.21 GitHub ä¸ä¼ è®°å½
+
+- çæ¬ï¼v4.21
+- æ¨¡åæä»¶ï¼v4.21/å¨è½å»å¹¿åä¿®å¤ç-Shadowrocket-v4.21.sgmodule
+- æä»¶é¡µï¼https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.21/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.21.sgmodule
+- Raw é¾æ¥ï¼https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.21/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.21.sgmodule
+- æäº¤ä¿¡æ¯ï¼ä¿®å¤å¾®åé·å®å¹¿ååå½ v4.21
+- å¤æ³¨ï¼v4.21 ä» v4.19 éæ°çæï¼æ¤é v4.20 çæ´åç´è¿ï¼æ¹ä¸ºå¹¿åååæ¦æªãä¸å¡åç²¾åç´è¿ã
+
 # v4.20 GitHub 上传记录
 
 - 版本：v4.20
