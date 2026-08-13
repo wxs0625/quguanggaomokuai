@@ -5,11 +5,11 @@
 ## 当前状态
 
 - 当前分支：`master`
-- 当前推荐版本：`v4.5/全能去广告修复版-Shadowrocket-v4.5.sgmodule`
+- 当前推荐版本：`v4.6/全能去广告修复版-Shadowrocket-v4.6.sgmodule`
 - 当前仓库没有远端地址，`git remote -v` 为空。
 - 本机未检测到 GitHub CLI，因此上传将使用普通 Git 远端方式。
-- 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/-.git`
-- 目标 GitHub 仓库页面：`https://github.com/wxs0625/-`
+- 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
+- 目标 GitHub 仓库页面：`https://github.com/wxs0625/quguanggaomokuai`
 - GitHub 页面推荐分支：`main`
 
 ## 上传授权状态
@@ -23,7 +23,7 @@
 首次配置远端时执行：
 
 ```bash
-git remote add origin git@github.com:wxs0625/-.git
+git remote add origin git@github.com:wxs0625/quguanggaomokuai.git
 git branch -M main
 git push -u origin main
 ```
@@ -31,15 +31,15 @@ git push -u origin main
 如果远端已经存在，则执行：
 
 ```bash
-git remote set-url origin git@github.com:wxs0625/-.git
+git remote set-url origin git@github.com:wxs0625/quguanggaomokuai.git
 git branch -M main
 git push -u origin main
 ```
 
 ## 授权上传后预计链接
 
-- GitHub 文件页：`https://github.com/wxs0625/-/blob/main/v4.5/全能去广告修复版-Shadowrocket-v4.5.sgmodule`
-- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/-/main/v4.5/全能去广告修复版-Shadowrocket-v4.5.sgmodule`
+- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.6/全能去广告修复版-Shadowrocket-v4.6.sgmodule`
+- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.6/全能去广告修复版-Shadowrocket-v4.6.sgmodule`
 
 说明：以上链接只有在你授权并成功上传后才会真正可访问。
 
