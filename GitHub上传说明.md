@@ -1,3 +1,12 @@
+# v4.18 GitHub 上传记录
+
+- 版本：v4.18
+- 模块文件：v4.18/全能去广告修复版-Shadowrocket-v4.18.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.18/全能去广告修复版-Shadowrocket-v4.18.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.18/全能去广告修复版-Shadowrocket-v4.18.sgmodule
+- 提交信息：闪动校园收紧开屏广告 SDK v4.18
+- 备注：v4.18 基于 v4.17，继续小步处理开屏广告，不扩大整域名 REJECT。
+
 # v4.17 GitHub 上传记录
 
 - 版本：v4.17
