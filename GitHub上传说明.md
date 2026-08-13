@@ -1,3 +1,12 @@
+# v4.22 GitHub 上传记录
+
+- 版本：v4.22
+- 模块文件：v4.22/全能去广告修复版-Shadowrocket-v4.22.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.22/全能去广告修复版-Shadowrocket-v4.22.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.22/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.22.sgmodule
+- 提交信息：修复微博酷安联网广告平衡 v4.22
+- 备注：v4.22 基于 v4.20，保留联网稳定策略，撤销整域提前直连，改为广告域先拦截、核心业务域精准直连。
+
 # v4.21 GitHub ä¸ä¼ è®°å½
 
 - çæ¬ï¼v4.21
