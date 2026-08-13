@@ -1,3 +1,12 @@
+# v4.14 GitHub 上传记录
+
+- 版本：v4.14
+- 模块文件：v4.14/全能去广告修复版-Shadowrocket-v4.14.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.14/全能去广告修复版-Shadowrocket-v4.14.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.14/全能去广告修复版-Shadowrocket-v4.14.sgmodule
+- 提交信息：闪动校园日志放行启动域名 v4.14
+- 备注：原始 PacketTunnel 日志已加入 .gitignore，不上传。
+
 # GitHub 上传说明
 
 当前仓库已完成本地版本归档，并已根据你提供的仓库地址上传到 GitHub。
