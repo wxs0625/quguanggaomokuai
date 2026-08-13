@@ -1,3 +1,14 @@
+# v5.0 GitHub 上传记录
+
+- 版本：v5.0
+- 模块文件：v5.0/全能去广告按需开关版-Shadowrocket-v5.0.sgmodule
+- 脚本文件：v5.0/按需去广告.js
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.0/全能去广告按需开关版-Shadowrocket-v5.0.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.0/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.0.sgmodule
+- 脚本 Raw：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.0/%E6%8C%89%E9%9C%80%E5%8E%BB%E5%B9%BF%E5%91%8A.js
+- 提交信息：构建按需开关轻量版 v5.0
+- 备注：v5.0 是单模块按需版，默认只覆盖少量目标应用，参数名以中文显示，降低 v4.23 700+ 全量规则带来的匹配负担。
+
 # v4.23 GitHub 上传记录
 
 - 版本：v4.23
