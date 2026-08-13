@@ -1,3 +1,12 @@
+# v4.20 GitHub 上传记录
+
+- 版本：v4.20
+- 模块文件：v4.20/全能去广告修复版-Shadowrocket-v4.20.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.20/全能去广告修复版-Shadowrocket-v4.20.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.20/全能去广告修复版-Shadowrocket-v4.20.sgmodule
+- 提交信息：修复微博酷安局部无网络 v4.20
+- 备注：v4.20 基于 v4.19，仅关闭微博/酷安深度改写和 MITM 误伤，优先恢复联网稳定。
+
 # v4.19 GitHub 上传记录
 
 - 版本：v4.19
@@ -59,7 +68,7 @@
 ## 当前状态
 
 - 当前分支：`main`
-- 当前推荐版本：`v4.19/全能去广告修复版-Shadowrocket-v4.19.sgmodule`
+- 当前推荐版本：`v4.20/全能去广告修复版-Shadowrocket-v4.20.sgmodule`
 - 当前远端地址：`https://github.com/wxs0625/quguanggaomokuai.git`
 - 上传方式：普通 Git HTTPS 远端。
 - 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
