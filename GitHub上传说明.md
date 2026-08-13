@@ -1,3 +1,12 @@
+# v4.17 GitHub 上传记录
+
+- 版本：v4.17
+- 模块文件：v4.17/全能去广告修复版-Shadowrocket-v4.17.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.17/全能去广告修复版-Shadowrocket-v4.17.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.17/全能去广告修复版-Shadowrocket-v4.17.sgmodule
+- 提交信息：闪动校园修复 HTTPS 开屏广告 v4.17
+- 备注：v4.17 基于 v4.16，仅恢复广告域 MITM 并空置 base/getAd，不扩大封禁。
+
 # v4.16 GitHub 上传记录
 
 - 版本：v4.16
