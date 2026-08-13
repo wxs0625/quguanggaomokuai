@@ -1,3 +1,12 @@
+# v4.15 GitHub 上传记录
+
+- 版本：v4.15
+- 模块文件：v4.15/全能去广告修复版-Shadowrocket-v4.15.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.15/全能去广告修复版-Shadowrocket-v4.15.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.15/全能去广告修复版-Shadowrocket-v4.15.sgmodule
+- 提交信息：闪动校园放行启动 SDK 稳定 v4.15
+- 备注：原始 PacketTunnel 日志不上传。
+
 # v4.14 GitHub 上传记录
 
 - 版本：v4.14
