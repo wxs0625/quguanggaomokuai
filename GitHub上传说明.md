@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 当前分支：`main`
-- 当前推荐版本：`v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
+- 当前推荐版本：`v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
 - 当前远端地址：`https://github.com/wxs0625/quguanggaomokuai.git`
 - 上传方式：普通 Git HTTPS 远端。
 - 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
@@ -34,8 +34,8 @@ git push -u origin main
 ## 当前可用链接
 
 - GitHub 仓库页：`https://github.com/wxs0625/quguanggaomokuai`
-- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
-- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
+- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
+- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
 
 说明：Raw 订阅链接可用于 Shadowrocket 远程模块导入。
 
@@ -71,3 +71,11 @@ git push -u origin main
 - 闪动校园：暂停 30 条高风险启动 SDK 改写/脚本命中，并从 MITM 主机列表移除 30 个相关主机，降低启动页卡住或闪退概率。
 - 百度网盘：补齐 `pan.baidu.com/act/api/activityentry`、`pan.baidu.com/rest/2.0/pcs/adx`、`update.pan.baidu.com/statistics`、`ndstatic.cdn.bcebos.com/activity/welfare/js/` 等实际 URL Rewrite 规则。
 - 规则状态：v4.11 已生成，并随本次提交同步到 GitHub。
+
+## v4.12 最新修复
+
+- 闪动校园：不再猜接口返回结构，改为流量隔离稳定版。
+- 闪动校园：只保留核心域名和启动 SDK 的顶部 `DIRECT` 白名单，移除相关拒绝、改写、脚本和 MITM 命中。
+- 核对原因：`v4.7` 是主业务接口被改写导致无网络；后续版本仍有启动 SDK 被改包/解密导致闪退风险。
+- 校验状态：风险域名在 `reject`、`REJECT`、`Map Local`、`Script`、`hostname =` 中残留命中均为 `0`。
+- 规则状态：v4.12 已生成，等待 GitHub 提交并推送。
