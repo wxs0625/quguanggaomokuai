@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 当前分支：`main`
-- 当前推荐版本：`v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
+- 当前推荐版本：`v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
 - 当前远端地址：`https://github.com/wxs0625/quguanggaomokuai.git`
 - 上传方式：普通 Git HTTPS 远端。
 - 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
@@ -34,8 +34,8 @@ git push -u origin main
 ## 当前可用链接
 
 - GitHub 仓库页：`https://github.com/wxs0625/quguanggaomokuai`
-- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
-- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.10/全能去广告修复版-Shadowrocket-v4.10.sgmodule`
+- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
+- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.11/全能去广告修复版-Shadowrocket-v4.11.sgmodule`
 
 说明：Raw 订阅链接可用于 Shadowrocket 远程模块导入。
 
@@ -64,3 +64,10 @@ git push -u origin main
 - 闪动校园：清理相关 URL Rewrite、Map Local、Script 和 MITM 主机命中项，避免通用规则继续误伤启动或联网。
 - 百度网盘：继续沿用 v4.8 开屏广告补强规则。
 - 规则状态：v4.10 已生成，并随本次提交同步到 GitHub。
+
+## v4.11 最新修复
+
+- 闪动校园：继续稳定优先，新增 `seeyouyima.com`、穿山甲/字节 SDK、腾讯 GDT 相关域名 `DIRECT` 白名单。
+- 闪动校园：暂停 30 条高风险启动 SDK 改写/脚本命中，并从 MITM 主机列表移除 30 个相关主机，降低启动页卡住或闪退概率。
+- 百度网盘：补齐 `pan.baidu.com/act/api/activityentry`、`pan.baidu.com/rest/2.0/pcs/adx`、`update.pan.baidu.com/statistics`、`ndstatic.cdn.bcebos.com/activity/welfare/js/` 等实际 URL Rewrite 规则。
+- 规则状态：v4.11 已生成，并随本次提交同步到 GitHub。
