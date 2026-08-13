@@ -1,3 +1,12 @@
+# v4.19 GitHub 上传记录
+
+- 版本：v4.19
+- 模块文件：v4.19/全能去广告修复版-Shadowrocket-v4.19.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.19/全能去广告修复版-Shadowrocket-v4.19.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.19/全能去广告修复版-Shadowrocket-v4.19.sgmodule
+- 提交信息：闪动校园一步到位强力去开屏广告 v4.19
+- 备注：v4.19 是强力去广告版，优先去开屏广告，可能牺牲部分稳定性。
+
 # v4.18 GitHub 上传记录
 
 - 版本：v4.18
