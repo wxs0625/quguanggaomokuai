@@ -1,3 +1,12 @@
+# v4.16 GitHub 上传记录
+
+- 版本：v4.16
+- 模块文件：v4.16/全能去广告修复版-Shadowrocket-v4.16.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.16/全能去广告修复版-Shadowrocket-v4.16.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.16/全能去广告修复版-Shadowrocket-v4.16.sgmodule
+- 提交信息：闪动校园稳定去开屏广告 v4.16
+- 备注：v4.16 基于 v4.15 稳定进入结果，只小步处理开屏广告。
+
 # v4.15 GitHub 上传记录
 
 - 版本：v4.15
