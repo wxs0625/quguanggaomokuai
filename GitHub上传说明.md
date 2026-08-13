@@ -5,7 +5,7 @@
 ## 当前状态
 
 - 当前分支：`main`
-- 当前推荐版本：`v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
+- 当前推荐版本：`v4.13/全能去广告修复版-Shadowrocket-v4.13.sgmodule`
 - 当前远端地址：`https://github.com/wxs0625/quguanggaomokuai.git`
 - 上传方式：普通 Git HTTPS 远端。
 - 目标 GitHub 仓库 SSH 地址：`git@github.com:wxs0625/quguanggaomokuai.git`
@@ -34,8 +34,8 @@ git push -u origin main
 ## 当前可用链接
 
 - GitHub 仓库页：`https://github.com/wxs0625/quguanggaomokuai`
-- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
-- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.12/全能去广告修复版-Shadowrocket-v4.12.sgmodule`
+- GitHub 文件页：`https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.13/全能去广告修复版-Shadowrocket-v4.13.sgmodule`
+- Raw 订阅链接：`https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.13/全能去广告修复版-Shadowrocket-v4.13.sgmodule`
 
 说明：Raw 订阅链接可用于 Shadowrocket 远程模块导入。
 
@@ -79,3 +79,11 @@ git push -u origin main
 - 核对原因：`v4.7` 是主业务接口被改写导致无网络；后续版本仍有启动 SDK 被改包/解密导致闪退风险。
 - 校验状态：风险域名在 `reject`、`REJECT`、`Map Local`、`Script`、`hostname =` 中残留命中均为 `0`。
 - 规则状态：v4.12 已生成，等待 GitHub 提交并推送。
+
+## v4.13 最新修复
+
+- 闪动校园：回到用户实测可启动的 `v4.7` 作为基线。
+- 闪动校园：只取消 `api.huachenjie.com` 主业务接口劫持，避免进入后无网络。
+- 闪动校园：保留 `v4.7` 中已实测可启动的启动广告规则，不再扩大修改范围。
+- 校验状态：`api.huachenjie.com` 活跃 Map Local 与 MITM 命中均为 `0`；启动广告相关 5 个域名命中与 `v4.7` 一致。
+- 规则状态：v4.13 已生成，等待 GitHub 提交并推送。
