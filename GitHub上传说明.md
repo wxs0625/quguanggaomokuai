@@ -207,3 +207,10 @@ git push -u origin main
 - 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E6%90%9C%E7%B4%A2%E7%89%88-Shadowrocket-v5.2.sgmodule
 - 搜索索引：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
 - 说明：合并 README-RULE/v5.1 和本地 Modules 文件夹 35 个模块文件，共 746 个软件开关。
+
+## v5.3
+
+- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E6%90%9C%E7%B4%A2%E7%A8%B3%E5%AE%9A%E7%89%88-Shadowrocket-v5.3.sgmodule
+- 快速搜索：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E8%BD%AF%E4%BB%B6%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2.md
+- 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.3/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
+- 说明：保留 746 个软件开关，新增快速搜索文件；微博移除 33 条热搜/正文高风险响应脚本，保留开屏广告拦截。
