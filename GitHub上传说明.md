@@ -1,3 +1,14 @@
+# v5.1 GitHub 上传记录
+
+- 版本：v5.1
+- 模块文件：v5.1/全能去广告全量软件开关版-Shadowrocket-v5.1.sgmodule
+- 执行器脚本：v5.1/按需开关执行器.js
+- 软件清单：v5.1/软件开关清单.md
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.1/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.1.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.1/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.1.sgmodule
+- 脚本 Raw：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.1/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js
+- 提交信息：构建全量软件开关版 v5.1
+
 # v5.0 GitHub 上传记录
 
 - 版本：v5.0
