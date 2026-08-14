@@ -201,3 +201,9 @@ git push -u origin main
 - 闪动校园：保留 `v4.7` 中已实测可启动的启动广告规则，不再扩大修改范围。
 - 校验状态：`api.huachenjie.com` 活跃 Map Local 与 MITM 命中均为 `0`；启动广告相关 5 个域名命中与 `v4.7` 一致。
 - 规则状态：v4.13 已生成，等待 GitHub 提交并推送。
+
+## v5.2
+
+- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E6%90%9C%E7%B4%A2%E7%89%88-Shadowrocket-v5.2.sgmodule
+- 搜索索引：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
+- 说明：合并 README-RULE/v5.1 和本地 Modules 文件夹 35 个模块文件，共 746 个软件开关。
