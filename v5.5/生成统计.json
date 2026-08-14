@@ -1,5 +1,5 @@
 {
-  "version": "v5.4",
+  "version": "v5.5",
   "total_switches": 746,
   "base_switches": 734,
   "local_module_files": 35,
@@ -12,7 +12,7 @@
     "unsupported_body": 138,
     "unsupported_url": 0
   },
-  "mitm_hosts": 27,
+  "mitm_hosts": 1081,
   "defaults_on": [
     "微信公众号",
     "微博",
@@ -699,7 +699,7 @@
       }
     }
   ],
-  "module_file": "全能去广告全量软件开关稳定直连版-Shadowrocket-v5.4.sgmodule",
+  "module_file": "全能去广告全量软件开关联网保护版-Shadowrocket-v5.5.sgmodule",
   "weibo_removed_high_risk_lines": 33,
   "weibo_removed_high_risk_sample": [
     "微博_本地脚本1 = type=http-response, pattern=^https?:\\/\\/m?api\\.weibo\\.c(n|om)\\/2\\/search\\/(finder|container_timeline|container_discover)\\?, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibo_ads.js, requires-body=true, timeout=60, enable={{{微博}}}",
@@ -723,22 +723,44 @@
     "微博_本地映射20 = type=http-request, pattern=^https?:\\/\\/weibointl\\.api\\.weibo\\.c(n|om)\\/portal\\.php\\?a=get_searching_info, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{微博}}}",
     "微博_本地映射21 = type=http-request, pattern=^https?:\\/\\/weibointl\\.api\\.weibo\\.c(n|om)\\/portal\\.php\\?a=treehole&auth=, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{微博}}}"
   ],
-  "search_preview": "https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.4/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html",
+  "search_preview": "https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.5/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html",
   "note": "v5.3 keeps all v5.2 switches, removes high-risk Weibo hot-search/content response scripts from the default Weibo switch, and keeps splash/ad-log blocking.",
-  "mitm_strategy": "stability-first curated MITM hosts; removed v5.2/v5.3 global MITM expansion",
-  "disabled_active_lines_count": 10,
-  "disabled_active_lines_sample": [
-    "酷安_本地拒绝1 = type=http-request, pattern=^https:\\/\\/api\\.coolapk\\.com\\/v6\\/search\\?.*type=hotSearch, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDQsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOCJ9LCJib2R5IjoiIn0, enable={{{酷安}}}",
+  "deleted_bad_version": "v5.4",
+  "stable_fix": {
+    "shandong_removed_script_lines": 7,
+    "coolapk_removed_script_lines": 5,
+    "mitm_exclusions_added": [
+      "-api.huachenjie.com",
+      "-*.huachenjie.com",
+      "-ad.shunchangzhixing.com",
+      "-report.shunchangzhixing.com",
+      "-*.shunchangzhixing.com",
+      "-api.coolapk.com",
+      "-www.coolapk.com",
+      "-coolapk.com",
+      "-*.coolapk.com"
+    ],
+    "direct_rules_added": [
+      "api.huachenjie.com",
+      "*.huachenjie.com",
+      "*.shunchangzhixing.com",
+      "api.coolapk.com",
+      "www.coolapk.com",
+      "coolapk.com"
+    ]
+  },
+  "removed_lines_sample": [
+    "酷安_本地拒绝1 = type=http-request, pattern=^https:\\/\\/api\\.coolapk\\.com\\/v6\\/search\\?.*type=hotSearch, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDQsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOCJ9LCJib2R5IjoiIn0, enable={{{酷安}}}",
+    "闪动校园_open_splash = type=http-request, pattern=^https?:\\/\\/(?:ad|report)\\.shunchangzhixing\\.com\\/(?:report|channel\\/report|display|click|track|event|win|upload|material|splash|ad|getAd|base\\/\\d+), script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOCJ9LCJib2R5Ijoie1wiY29kZVwiOjIwMCxcIm1zZ1wiOlwic3VjY2Vzc1wiLFwiZGF0YVwiOltdfSJ9, enable={{{闪动校园}}}",
     "酷安 = type=http-response, pattern=^https?:\\/\\/api\\.coolapk\\.com\\/v6\\/feed\\/(detail|replyList)\\?, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60, enable={{{酷安}}}",
     "酷安 = type=http-response, pattern=^https?:\\/\\/api\\.coolapk\\.com\\/v6\\/main\\/(dataList|indexV8|init), script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60, enable={{{酷安}}}",
     "酷安 = type=http-response, pattern=^https?:\\/\\/api\\.coolapk\\.com\\/v6\\/page\\/dataList\\?, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60, enable={{{酷安}}}",
     "酷安URL重定向 = type=http-request, pattern=^https:\\/\\/www\\.coolapk\\.com\\/link.*, script-path=https://raw.githubusercontent.com/VenenoSix24/Ivy-Script/refs/heads/main/Loon/script/Coolapk_Redirect.js, timeout=10, enable={{{酷安}}}",
-    "闪动校园_Map1 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/ai\\/getAICategory, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
-    "闪动校园_Map2 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/home\\/sports\\/getPopup, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
-    "闪动校园_Map3 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/ad, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
-    "闪动校园_Map5 = type=http-request, pattern=^https:\\/\\/open\\.e\\.kuaishou\\.cn\\/rest\\/e\\/v3\\/open, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
-    "闪动校园_Map6 = type=http-request, pattern=^https:\\/\\/zlsdk\\.1rtb\\.net\\/sdk\\/req_ad\\?sdk_version=\\d+\\.\\d+\\.\\d+\\.\\d+&device_os=iOS&accept_ad_type=\\d+&app_id=\\d+&pid=\\d+&sdk_version_code=\\d+, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}"
-  ],
-  "shan_dong_strategy": "direct api.huachenjie/huachenjie; keep only shunchangzhixing ad/report handling",
-  "coolapk_strategy": "direct coolapk domains; disable Coolapk response rewrite and redirect scripts"
+    "闪动校园_Map1 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/ai\\/getAICategory, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
+    "闪动校园_Map2 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/home\\/sports\\/getPopup, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
+    "闪动校园_Map3 = type=http-request, pattern=^https:\\/\\/api\\.huachenjie\\.com\\/run-front\\/ad, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
+    "闪动校园_Map4 = type=http-request, pattern=^http:\\/\\/ad\\.shunchangzhixing\\.com\\/getAd, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
+    "闪动校园_Map5 = type=http-request, pattern=^https:\\/\\/open\\.e\\.kuaishou\\.cn\\/rest\\/e\\/v3\\/open, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}",
+    "闪动校园_Map6 = type=http-request, pattern=^https:\\/\\/zlsdk\\.1rtb\\.net\\/sdk\\/req_ad\\?sdk_version=\\d+\\.\\d+\\.\\d+\\.\\d+&device_os=iOS&accept_ad_type=\\d+&app_id=\\d+&pid=\\d+&sdk_version_code=\\d+, script-path=https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js, timeout=10, argument=eyJtb2RlIjoic3RhdGljIiwic3RhdHVzIjoyMDAsImhlYWRlcnMiOnsiQ29udGVudC1UeXBlIjoiYXBwbGljYXRpb24vanNvbiJ9LCJib2R5Ijoie30ifQ, enable={{{闪动校园}}}"
+  ]
 }

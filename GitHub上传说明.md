@@ -215,9 +215,9 @@ git push -u origin main
 - 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.3/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
 - 说明：保留 746 个软件开关，新增快速搜索文件；微博移除 33 条热搜/正文高风险响应脚本，保留开屏广告拦截。
 
-## v5.4
+## v5.5
 
-- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E7%A8%B3%E5%AE%9A%E7%9B%B4%E8%BF%9E%E7%89%88-Shadowrocket-v5.4.sgmodule
-- 快速搜索：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.4/%E8%BD%AF%E4%BB%B6%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2.md
-- 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.4/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
-- 说明：回退 v5.2/v5.3 全局 MITM 扩张；闪动校园 api.huachenjie 与酷安 api.coolapk 恢复直连/排除，禁用 10 条高风险活动脚本。
+- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E8%81%94%E7%BD%91%E4%BF%9D%E6%8A%A4%E7%89%88-Shadowrocket-v5.5.sgmodule
+- 快速搜索：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E8%BD%AF%E4%BB%B6%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2.md
+- 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.5/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
+- 说明：删除错误 v5.4；基于 v5.3 保留 746 个开关，仅修复闪动校园和酷安联网保护。闪动校园移除 7 条业务接口脚本，酷安移除 5 条深度脚本，其他软件规则不改。
