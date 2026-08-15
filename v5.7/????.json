@@ -1,0 +1,52 @@
+{
+  "version": "v5.7",
+  "source_version": "v5.5",
+  "total_switches": 746,
+  "runtime_switches": [
+    "百度网盘",
+    "微信公众号",
+    "微博"
+  ],
+  "network_protection_switches": [
+    "闪动校园",
+    "酷安"
+  ],
+  "catalogue_only_switches": 741,
+  "source_script_lines": 1922,
+  "retained_script_lines": 58,
+  "removed_script_lines": 1864,
+  "source_requires_body": 273,
+  "retained_requires_body": 5,
+  "source_mitm_hosts": 1085,
+  "retained_mitm_hosts": 34,
+  "source_module_bytes": 835193,
+  "output_module_bytes": 40681,
+  "module_size_reduction_percent": 95.13,
+  "mitm_host_reduction_percent": 96.87,
+  "base_switches": 734,
+  "local_module_files": 35,
+  "local_converted_script_lines": 436,
+  "defaults_on": [
+    "百度网盘",
+    "闪动校园",
+    "微信公众号",
+    "微博"
+  ],
+  "output_module_sha256": "dc5a2f90684a899d3a6259d6f38c268e94bb4cfa4f6599b78af7f81695f4967c",
+  "files": [
+    "全能去广告省电裁剪版-Shadowrocket-v5.7.sgmodule",
+    "按需开关执行器.js",
+    "软件开关清单.md",
+    "软件快速搜索.md",
+    "软件搜索索引.html",
+    "生成统计.json",
+    "本版本变更记录.md"
+  ],
+  "executor_mock_cases": [
+    "static",
+    "weibo_launch_empty",
+    "weibo_content_preserve",
+    "wechat"
+  ],
+  "limitation": "本省电裁剪包保留 746 个参数目录，但只载入默认四项对应的实际运行规则；其他开关需要生成下一版后才会生效。"
+}
