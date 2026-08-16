@@ -1,22 +1,3 @@
-# v4.24 GitHub 上传记录
-
-- 版本：v4.24
-- 模块文件：v4.24/全能去广告修复版-Shadowrocket-v4.24.sgmodule
-- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.24/全能去广告修复版-Shadowrocket-v4.24.sgmodule
-- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.24/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.24.sgmodule
-- 提交信息：修复广告漏拦直连冲突 v4.24
-- 备注：v4.24 基于 v4.23，只收紧广告/日志 SDK 的提前直连冲突，保留闪动校园主业务稳定直连。
-# v4.23 GitHub 上传记录
-
-- 版本：v4.23
-- 模块文件：v4.23/全能去广告修复版-Shadowrocket-v4.23.sgmodule
-- 脚本文件：v4.23/微信公众号去广告.js
-- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.23/全能去广告修复版-Shadowrocket-v4.23.sgmodule
-- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.23/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.23.sgmodule
-- 脚本 Raw：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.23/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%8E%BB%E5%B9%BF%E5%91%8A.js
-- 提交信息：加强微信公众号广告拦截 v4.23
-- 备注：v4.23 基于 v4.22，仅加强微信公众号广告接口和文章 HTML 净化。
-
 # v4.22 GitHub 上传记录
 
 - 版本：v4.22
