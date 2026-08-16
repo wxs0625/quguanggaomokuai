@@ -1,3 +1,12 @@
+# v4.23 GitHub 上传记录
+
+- 版本?v4.23
+- 模块文件?v4.23/全能去广告精简保留版-Shadowrocket-v4.23.sgmodule
+- 文件页?https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.23/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E7%89%88-Shadowrocket-v4.23.sgmodule
+- Raw 链接?https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.23/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E7%89%88-Shadowrocket-v4.23.sgmodule
+- 提交信息?按保留清单生成精简模块 v4.23
+- 备注?v4.23 仅保留用户选择的 173 个 App?并继承 v4.22 对酷安?Weico/微博?闪动校园 的稳定补丁?
+
 # v4.22 GitHub 上传记录
 
 - 版本：v4.22
