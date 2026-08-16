@@ -1,3 +1,12 @@
+# v4.24 GitHub 上传记录
+
+- 版本?v4.24
+- 模块文件?v4.24/全能去广告精简保留本地整合版-Shadowrocket-v4.24.sgmodule
+- 文件页?https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.24/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E6%9C%AC%E5%9C%B0%E6%95%B4%E5%90%88%E7%89%88-Shadowrocket-v4.24.sgmodule
+- Raw 链接?https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.24/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E6%9C%AC%E5%9C%B0%E6%95%B4%E5%90%88%E7%89%88-Shadowrocket-v4.24.sgmodule
+- 提交信息?整合本地Modules模块 v4.24
+- 备注?v4.24 基于 v4.23 精简保留版??????? Modules ?? 37 ??????/?????????
+
 # v4.23 GitHub 上传记录
 
 - 版本?v4.23
