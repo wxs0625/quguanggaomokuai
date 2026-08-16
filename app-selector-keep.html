@@ -3013,8 +3013,7 @@
       function renderExport() {
         const kept = keptValues();
         const lines = kept.map((value, index) => (index + 1) + '. [x] ' + value);
-        output.value = lines.join('
-') || labels.empty;
+        output.value = lines.join('\n') || labels.empty;
         result.style.display = 'block';
         result.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return output.value;
