@@ -1,25 +1,11 @@
-# v5.1 GitHub 上传记录
+# v4.24 GitHub 上传记录
 
-- 版本：v5.1
-- 模块文件：v5.1/全能去广告全量软件开关版-Shadowrocket-v5.1.sgmodule
-- 执行器脚本：v5.1/按需开关执行器.js
-- 软件清单：v5.1/软件开关清单.md
-- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.1/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.1.sgmodule
-- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.1/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.1.sgmodule
-- 脚本 Raw：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.1/%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E6%89%A7%E8%A1%8C%E5%99%A8.js
-- 提交信息：构建全量软件开关版 v5.1
-
-# v5.0 GitHub 上传记录
-
-- 版本：v5.0
-- 模块文件：v5.0/全能去广告按需开关版-Shadowrocket-v5.0.sgmodule
-- 脚本文件：v5.0/按需去广告.js
-- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.0/全能去广告按需开关版-Shadowrocket-v5.0.sgmodule
-- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.0/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E6%8C%89%E9%9C%80%E5%BC%80%E5%85%B3%E7%89%88-Shadowrocket-v5.0.sgmodule
-- 脚本 Raw：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.0/%E6%8C%89%E9%9C%80%E5%8E%BB%E5%B9%BF%E5%91%8A.js
-- 提交信息：构建按需开关轻量版 v5.0
-- 备注：v5.0 是单模块按需版，默认只覆盖少量目标应用，参数名以中文显示，降低 v4.23 700+ 全量规则带来的匹配负担。
-
+- 版本：v4.24
+- 模块文件：v4.24/全能去广告修复版-Shadowrocket-v4.24.sgmodule
+- 文件页：https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.24/全能去广告修复版-Shadowrocket-v4.24.sgmodule
+- Raw 链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.24/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.24.sgmodule
+- 提交信息：修复广告漏拦直连冲突 v4.24
+- 备注：v4.24 基于 v4.23，只收紧广告/日志 SDK 的提前直连冲突，保留闪动校园主业务稳定直连。
 # v4.23 GitHub 上传记录
 
 - 版本：v4.23
@@ -201,23 +187,3 @@ git push -u origin main
 - 闪动校园：保留 `v4.7` 中已实测可启动的启动广告规则，不再扩大修改范围。
 - 校验状态：`api.huachenjie.com` 活跃 Map Local 与 MITM 命中均为 `0`；启动广告相关 5 个域名命中与 `v4.7` 一致。
 - 规则状态：v4.13 已生成，等待 GitHub 提交并推送。
-
-## v5.2
-
-- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E6%90%9C%E7%B4%A2%E7%89%88-Shadowrocket-v5.2.sgmodule
-- 搜索索引：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.2/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
-- 说明：合并 README-RULE/v5.1 和本地 Modules 文件夹 35 个模块文件，共 746 个软件开关。
-
-## v5.3
-
-- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E6%90%9C%E7%B4%A2%E7%A8%B3%E5%AE%9A%E7%89%88-Shadowrocket-v5.3.sgmodule
-- 快速搜索：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.3/%E8%BD%AF%E4%BB%B6%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2.md
-- 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.3/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
-- 说明：保留 746 个软件开关，新增快速搜索文件；微博移除 33 条热搜/正文高风险响应脚本，保留开屏广告拦截。
-
-## v5.5
-
-- 模块链接：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E5%85%A8%E9%87%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%85%B3%E8%81%94%E7%BD%91%E4%BF%9D%E6%8A%A4%E7%89%88-Shadowrocket-v5.5.sgmodule
-- 快速搜索：https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v5.5/%E8%BD%AF%E4%BB%B6%E5%BF%AB%E9%80%9F%E6%90%9C%E7%B4%A2.md
-- 交互搜索：https://htmlpreview.github.io/?https://github.com/wxs0625/quguanggaomokuai/blob/main/v5.5/%E8%BD%AF%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%B4%A2%E5%BC%95.html
-- 说明：删除错误 v5.4；基于 v5.3 保留 746 个开关，仅修复闪动校园和酷安联网保护。闪动校园移除 7 条业务接口脚本，酷安移除 5 条深度脚本，其他软件规则不改。
