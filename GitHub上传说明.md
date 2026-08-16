@@ -1,3 +1,12 @@
+# v4.25 GitHub 上传记录
+
+- 版本?v4.25
+- 模块文件?v4.25/全能去广告精简保留广告修复版-Shadowrocket-v4.25.sgmodule
+- 脚本文件?v4.25/通用广告字段净化.js
+- 文件页?https://github.com/wxs0625/quguanggaomokuai/blob/main/v4.25/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.25.sgmodule
+- Raw 链接?https://raw.githubusercontent.com/wxs0625/quguanggaomokuai/main/v4.25/%E5%85%A8%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%B2%BE%E7%AE%80%E4%BF%9D%E7%95%99%E5%B9%BF%E5%91%8A%E4%BF%AE%E5%A4%8D%E7%89%88-Shadowrocket-v4.25.sgmodule
+- 提交信息?????????? v4.25
+
 # v4.24 GitHub 上传记录
 
 - 版本?v4.24
