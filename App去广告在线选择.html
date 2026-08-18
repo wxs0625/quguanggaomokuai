@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>App 去广告在线选择清单</title>
+  <style>
+    :root { color-scheme: light; --bg:#f6f7fb; --panel:#ffffff; --text:#172033; --muted:#667085; --line:#d8dee9; --brand:#2563eb; --danger:#b42318; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+    header { position: sticky; top: 0; z-index: 5; background: rgba(246,247,251,.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px; }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    .meta { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .toolbar { display: grid; grid-template-columns: 1fr auto auto auto; gap: 10px; margin-top: 14px; align-items: center; }
+    input[type="search"] { width: 100%; height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 16px; background: #fff; }
+    button { height: 42px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); cursor: pointer; font-size: 14px; }
+    button.primary { background: var(--brand); border-color: var(--brand); color: white; }
+    button.danger { color: var(--danger); }
+    main { max-width: 1120px; margin: 0 auto; padding: 18px; }
+    .summary { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; color: var(--muted); font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+    label.app { display: flex; gap: 10px; align-items: center; min-height: 44px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    label.app input { width: 18px; height: 18px; flex: 0 0 auto; }
+    label.app span { overflow-wrap: anywhere; }
+    textarea { width: 100%; min-height: 160px; margin-top: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; display: none; }
+    .hint { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 760px) { .toolbar { grid-template-columns: 1fr 1fr; } input[type="search"] { grid-column: 1 / -1; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>App 去广告在线选择清单</h1>
+      <div class="meta">勾选代表“从下一版模块移除这个 App 的去广告规则”。选择会自动保存在当前浏览器。</div>
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="搜索 App，例如：微博、百度网盘、酷安" />
+        <button id="selectVisible">勾选当前搜索结果</button>
+        <button id="clearVisible">取消当前搜索结果</button>
+        <button id="clearAll" class="danger">全部取消</button>
+        <button id="export" class="primary">导出已勾选</button>
+      </div>
+      <div class="hint">导出后把结果发给我，我会按清单生成新版本并上传 GitHub。</div>
+    </div>
+  </header>
+  <main>
+    <div class="summary"><span id="total"></span><span id="shown"></span><span id="checked"></span></div>
+    <div id="list" class="grid"></div>
+    <textarea id="output" readonly></textarea>
+  </main>
+  <script>
+    const apps = ["广告联盟","12123","12306","17173（网络游戏门户网站）","178游戏网","18183游戏网","1905电影网","21经济网","2345天气王","2345网址导航","360","360儿童卫士","365日历","36kr","39健康网","500","51CTO学堂","51信用卡管家","555影视","58同城","58汽车","AOL（美国在线）","AcFun","Adobe","Adobe Flash China Special Edition","Akamai","Amazon","AppSo","Apple","安吉星","安徽掌上10000","澳觅","爱企查","爱卡汽车网","爱回收","爱奇艺","爱思助手","爱拍","爱桐乡","爱牵挂care","爱美剧","爱阅书香","阿里云","阿里云盘","阿里巴巴","阿里系","BBC","Bing","Blued","Braze","bshare","乐刻","北京银行","北京首汽","半月谈","哔哩哔哩漫画","奔图","宝宝树","宝宝树孕育","崩坏3","币世界","币安","必胜客","掌上京彩","暴风影音","比亚迪王朝","比特球云盘","波点音乐","爆米花","百信银行","百姓网","百度","百度地图","百度文库","百度网盘","百度翻译","百度贴吧","百度输入法","百意","百词斩","笔趣阁","菠萝包轻小说","薄荷健康","贝壳找房","贝太厨房","C\u0026J Marketing","CNN","CSDN","Camera360","Clubmed","clicli","crunchyroll","创客贴设计","创维","刺猬猫阅读","彩云天气","曹操专车","潮玩宇宙","菜鸟裹裹","财新网","财经杂志","财联社","超星学习通","超级课程表","车来了","长城炼金术","DLabel云标签","Dr.Peng","丁香医生","丁香园","东方网","东方航空","东方财富","低端影视","到梦空间","动卡空间","动画疯","叮咚买菜","叮嗒出行","嘀嗒出行","多多视频","大众点评","大师兄","大智慧","大疆商城","大麦","当当网","当当阅读","得物","懂球帝","懂车帝","抖音","斗鱼直播","朵朵校友圈","滴滴代驾","滴滴出行","滴滴青桔","电E宝","电影猎手","电脑之家","电视家","盯盯拍","豆瓣","达达骑士版","钉钉","EMS微信小程序","e代驾","e充电","饿了么","Facebook","Flightradar24","丰巢","凤凰新媒体","凤凰秀","分期乐","发现精彩","复游会微信小程序","富途牛牛","房天下 (Soufun)","樊登读书","番茄小说","福享太平","粉笔","返利网","风行网","飞客茶馆","飞常准","飞猪","飞猫管家","Go.com","Google","光大银行","光大银行 阳光惠生活","公考雷达","冠寓","勾正数据（GozenData）","国双 (Gridsum)","国家医保服务平台","国泰君安","国美电器","工商银行","工时记录","工银E生活","工银e生活小程序","广发银行","广州农商银行","广州地铁乘车码","广汽传祺","广汽本田","怪兽充电","挂号网（微医）","故宫博物馆小程序","盖得排行","购物党","赶集网","高德地图","高铁管家","HDO","Hao123","Huawei AspiegelBot","互传","会声会影","华为商城","华住会","华宝智投","华尔街见闻","华彩生活","华数TV","华盛通","合利宝展业通","和讯网","和风天气","哈啰","哈富证券","嗨学","好型体重秤","好奇心日报","好好住","好游快爆","杭州公交","杭州市民","横店电影小程序","汇丰汇选","汇付天下","沪江网校","海尔服务小程序","海豚优惠","海马爸比","湖南卫视","火猫","环球网","盒马","红版报","航旅纵横","花小猪","花生地铁","虎嗅","虎扑","虎牙直播","韩剧TV","黄油相机","IT之家","i3","九游","京东","京东云无线宝","京东健康","京东读书","京东金融","京喜","今日头条","今日水印相机","加油广东","吉林银行","巨潮资讯","建行生活","机核网","极简汇率","江苏银行","界面新闻","简讯","街电","金十数据","金山系 (Kingsoft)","金山词霸","金立 (Gionee)","金融界","锦江荟APP","韭菜公社","驾校一点通","驾考宝典","Keep","口袋校园","夸克","开源中国","快乐广播","快压zip","快懂百科","快手","快手联盟,优量汇,穿山甲「广告联盟」","快看","快递100","快速问医生","看东方（百视TV）","看天下","看理想","肯德基","酷6网","酷安","酷我音乐","酷狗音乐","LING Club-原菱菱邦","Line","LinkWiFi","LinkedIn","LocSim","Lycos","linxi","lofter","两步路","乐堡潮玩馆小程序","乐居","乐播投屏","乐橙","乐视","懒人听书","懒投资","拉卡拉","拦截100","旅法师营地","旅途随身听","来电","来疯","猎聘","罗森点点","联想","联想至像打印","莱充","蓝基因","鲁班到家用户版","MIX","MacKeeper","Makeding (苏州思杰马克丁)","Microsoft","买单吧","全民生活","咪咕视频","埋堆堆","墨迹天气","妈妈网","妈妈网孕育","每日优鲜","每日精选","民生银行","漫画人","猫扑 (Mop)","猫眼","猫耳FM","秒拍","米家","美丽修行","美味不用等","美团","美团 \u0026 美团外卖","美团众包","美团充电宝小程序","美图秀秀","美柚","美颜相机","脉脉","芒果TV","蘑菇租房","蘑菇街","马卡龙玩图","马蜂窝","马达出行","魅族 (Meizu)","麦当劳","NTPlay","Naver","New Relic","农业银行","南方航空","奈菲影视","宁聚","牛听听","牛津高阶词典第十版","ONE","OPPO","Openmultimedia","Optimix（奥迪美）","Oray","Oupeng (欧朋)","Outfit7（会说话的汤姆猫）","Outlook","ofo共享单车","omofun","PPTV","PeanutWiFi","Photoable","PushPlus微信推送广告","pikpak","平安口袋银行","平安壹钱包","平安好车主","平安证券","拼多多","朴朴超市","浦发银行","浦大喜奔","澎湃新闻","皮皮搞笑","皮皮虾","票星球","票根","QQ浏览器","QQ钱包","QQ音乐","七猫小说","亲宝宝","企迈 - QMAI(包含: 挪瓦咖啡、林里柠檬茶、霸王茶姬、陈香贵)","全家便利店","全民K歌","全球购骑士卡","全能浏览器","前程无忧 51Job","去哒","去哪儿","奇瑞汽车","汽水音乐","汽车之家","球迷报","穷游","蜻蜓FM","起点读书","齐鲁网","RARBG","Reddit","人人视频","人民日报","人民网","日产智联","日日煮","日淘任意门","瑞幸咖啡","Sape","Snapchat","Soul","Spotify","Stay","三联中读","上汽大众","世纪佳缘","书旗小说","什么值得买","四季線上影視","四川航空","少数派","山姆会员商店","手机中国","搜狐","搜狗","搜狗输入法","搜电充电","收钱吧","数盟 (Shuzilm)","深圳通","深圳通微信小程序","盛趣游戏","省省回头车","神舟汽车","神马","苏e行","苏周到","苏宁易购","苏打校园APP","识货","闪动校园","闪现一下","闪萌","顺丰优选","顺丰快递","顺丰快递小程序","首旅如家","首汽约车","TT语音","Talkatone","Tanwan (贪玩)","TapTap","Top Widgets","TruthSocial","TubeMax","Tumblr","Turn","Twitch","Twitter","台铃智能","同盾","同程旅行","同花顺","团油","天天基金","天天看看","天山云TV","天府市民云","天府手机银行","天府通","天府银行小程序","天星金融","天猫养车","天猫精灵","天神","天翼云盘","太平洋电脑","太平洋知科技","推栏","淘宝","淘淘搜","淘淘阅读","淘票票","腾讯乘车码","腾讯体育","腾讯地图","腾讯广告","腾讯手机管家","腾讯新闻","腾讯智慧","腾讯游戏","腾讯游戏社区","腾讯系","腾讯视频","迅雷","途家民宿","途牛","途虎养车","UC浏览器","Unity Ads","Urban Airship","U净","udn news","VIVO商城","Vista看天下","Vivo","vgTime","WPS","Waps（无线广告交易中心）","Weico(微博客户端)","Whale Cloud (鲸云)","WiFi万能钥匙","Wostore (联通沃商店)","万词王","万达电影","唯品会","威锋","完美世界电竞","微信公众号","微信解除链接限制","微店","悟空遥控器","我爱卡社区管家","无他相机","本来生活","歪麦霸王餐","温尼伯站","稿定设计","网上国网","网易","网易严选","网易云","网易云音乐","网易大神","网易新闻","网易有道词典","网易有钱","网易考拉","网易蜗牛读书","网易邮箱","蜗牛睡眠","豌豆荚","下厨房","兴业生活","兴业证券","兴业银行","厦门航空","向日葵","喜马拉雅","寻医问药","小Biu智家","小佩宠物","小兔充充","小利生活","小合拓展","小宇宙","小小影视","小桔科技","小熊拦截","小熊艺术","小爱音箱","小牛","小特 - 首选特斯拉中文社区","小电充电","小白学习打印机","小睡眠","小米","小米商城","小米打印","小米有品","小米运动","小米金融","小红书","小艺","小芒","小蚕霸王餐","小象超市","希尔顿","希沃白板5","心悦俱乐部","携程","新华网","新民网","新浪","新浪新闻","新片场","星火英语","星财富","星途 starway","晓晓优选","熊猫直播","稀饭动漫","笑容加","米游社","米读","虾米音乐","西施眼","西窗烛","讯飞","讯飞输入法","迅游加速器","闲鱼","雪球","香蕉是一种水果","YY直播平台","Yahoo","YouTube","一刻相册","一号店","一汽大众","一淘","一点资讯","一起考教师","云之家","云宝宝大数据","云快充","云闪付","云麦","亚信科技","亚朵开屏","优书","优酷","元聚网络（漫画岛，追书神器，甜瓜小说）","医考帮","印象笔记","友邦","友邻优课","央视影音 (CBox)","央视网","央视频","悠易互通","悠洗APP","悠视网","易捷加油","易查","易校园","易车","映客直播","曜影医疗","有兔阅读(米兔)","有米","永安行","永辉","游久网","游戏时光","游民星空","游迅网","猿辅导","盈宝证券","盈立智投","翼支付","育学园","艺龙","艺龙旅行网","萤石","邮储银行","银盛小Y管家","银盛通","音悦Tai","鸭奈飞","ZAKER新闻","中信银行","中关村","中关村在线","中华万年历","中华网","中国人保","中国人寿","中国国际广播电视网络台（CIBN）","中国国际航空","中国天气网小程序","中国平安","中国广电","中国日报","中国电信","中国知网","中国移动","中国移动云盘","中国联通","中国银行 缤纷生活","中油优途","中油好客e站小程序","中羽在线","中通快递","中银跨境GO","众邦银行","住这儿","作业帮","字节跳动","招商证券","招商银行","招财猫直聘","招钱进宝","指点天下","掌上公交","掌上生活","掌上英雄联盟","掌上道具城","掌上鹿城","掌阅","智行APP","最右","正气助手","浙里办","涨乐财富通","猪八戒","真不卡","知乎","职工普惠","自如","转转","追书神器","追剧达人","郑好办"];
+    const key = 'ad-module-remove-apps-v1';
+    const selected = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+    const list = document.getElementById('list');
+    const search = document.getElementById('search');
+    const output = document.getElementById('output');
+    const save = () => localStorage.setItem(key, JSON.stringify([...selected]));
+    const filtered = () => apps.filter(name => name.toLowerCase().includes(search.value.trim().toLowerCase()));
+    function render() {
+      const rows = filtered();
+      list.innerHTML = '';
+      for (const name of rows) {
+        const label = document.createElement('label');
+        label.className = 'app';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = selected.has(name);
+        checkbox.addEventListener('change', () => { checkbox.checked ? selected.add(name) : selected.delete(name); save(); renderSummary(rows.length); });
+        const span = document.createElement('span');
+        span.textContent = name;
+        label.append(checkbox, span);
+        list.append(label);
+      }
+      renderSummary(rows.length);
+    }
+    function renderSummary(shownCount) {
+      document.getElementById('total').textContent = 全部：;
+      document.getElementById('shown').textContent = 当前显示：;
+      document.getElementById('checked').textContent = 已勾选移除：;
+    }
+    search.addEventListener('input', render);
+    document.getElementById('selectVisible').onclick = () => { filtered().forEach(name => selected.add(name)); save(); render(); };
+    document.getElementById('clearVisible').onclick = () => { filtered().forEach(name => selected.delete(name)); save(); render(); };
+    document.getElementById('clearAll').onclick = () => { selected.clear(); save(); render(); output.style.display = 'none'; };
+    document.getElementById('export').onclick = async () => {
+      const lines = [...selected].map((name, index) => ${index + 1}. [x] );
+      const text = lines.join('\n') || '未勾选任何 App';
+      output.value = text;
+      output.style.display = 'block';
+      output.focus();
+      output.select();
+      try { await navigator.clipboard.writeText(text); } catch (e) {}
+    };
+    render();
+  </script>
+</body>
+</html>

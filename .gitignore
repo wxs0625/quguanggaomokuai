@@ -1,0 +1,10 @@
+/README-RULE.upstream.md
+/ShanDongXiaoYuan.lpx
+/ShanDongXiaoYuan.sgmodule
+/ShanDongXiaoYuan.snippet
+/v4.0_Loon_All_In_One_Fixed_Shadowrocket.sgmodule
+/v4.1_Loon_All_In_One_Fixed_Shadowrocket.sgmodule
+.packet_tunnel_latest.log
+PacketTunnel-*.log
+.cache/
+tmp-selector-script.js

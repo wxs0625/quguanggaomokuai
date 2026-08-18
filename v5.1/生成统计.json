@@ -1,0 +1,560 @@
+{
+  "version": "v5.1",
+  "switches": 734,
+  "script_lines": 1531,
+  "mitm_hosts": 935,
+  "source_failures": 10,
+  "stats": {
+    "rule_not_embedded": 2963,
+    "url_reject_converted": 510,
+    "script_original": 217,
+    "map_converted": 800,
+    "body_rewrite_unsupported": 94
+  },
+  "unsupported_count": 98,
+  "module_lines": 1544,
+  "source_failures_detail": [
+    {
+      "idx": 89,
+      "name": "CSDN",
+      "path": "partC/CSDN.sgmodule"
+    },
+    {
+      "idx": 91,
+      "name": "Clubmed",
+      "path": null
+    },
+    {
+      "idx": 101,
+      "name": "财新网",
+      "path": "partC/Caixin.sgmodule"
+    },
+    {
+      "idx": 113,
+      "name": "东方航空",
+      "path": null
+    },
+    {
+      "idx": 147,
+      "name": "EMS微信小程序",
+      "path": null
+    },
+    {
+      "idx": 210,
+      "name": "华盛通",
+      "path": "partH/huashengtong.sgmodule"
+    },
+    {
+      "idx": 269,
+      "name": "锦江荟APP",
+      "path": null
+    },
+    {
+      "idx": 431,
+      "name": "Stay",
+      "path": null
+    },
+    {
+      "idx": 550,
+      "name": "网易云",
+      "path": null
+    },
+    {
+      "idx": 562,
+      "name": "兴业生活",
+      "path": null
+    }
+  ],
+  "unsupported_sample": [
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/api\\.bilibili\\.com\\/x\\/pd-proxy\\/tracker\\? '.data[][]?=\"stun.chat.bilibili.com:3478\"'"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/api\\.bilibili\\.com\\/pgc\\/view\\/v2\\/app\\/season\\? 'del(.data.payment)'"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/api\\.bilibili\\.com\\/pgc\\/page\\/channel\\? '.data.modules |= map(select(.type != \"TIP\") | if .type == \"BANNER\" then .module_data.items"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/resource\\/show\\/skin\\? 'delpaths([[\"data\",\"common_equip\"]])'"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/resource\\/show\\/tab\\/v2\\? '.data.tab = [     {         pos: 1,         id: 731,         name: \"\\u76F4\\u64AD\","
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/v2\\/splash\\/(list|show|event\\/list2)\\? '.data |= with_entries(if .key | IN(\"show\", \"event_list\") then .value "
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/v2\\/feed\\/index\\? 'if .data.items then .data.items |= map(select((.banner_item == null) and (.ad_info == null"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/v2\\/feed\\/index\\/story\\? 'if .data.items then .data.items |= map(select((.ad_info == null) and (.card_goto | "
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/v2\\/account\\/mine(\\/ipad)?\\? '.data |= (     del(.answer, .live_tip, .vip_section, .vip_section_v2, .modular_"
+    },
+    {
+      "name": "哔哩哔哩",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app\\.bilibili\\.com\\/x\\/v2\\/account\\/myinfo\\? '.data.vip |= if . != null and .status == 0 then . + { status: 1, type: 2, due_date: 90"
+    },
+    {
+      "name": "crunchyroll",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/beta-api\\.crunchyroll\\.com\\/cms offset_ms\":\\d+ offset_ms\":99999999999999"
+    },
+    {
+      "name": "叮咚买菜",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/maicai\\.api\\.ddxq\\.mobi\\/homeApi\\/newDetails suspension fmz200"
+    },
+    {
+      "name": "大师兄",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/adservice\\.sigmob\\.cn\\/extconfig false true"
+    },
+    {
+      "name": "飞客茶馆",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/47\\.100\\.65\\.202\\/api\\/mobile\\/index\\.php\\?version=\\d&mobile=yes&module=basicdata&type=forumlist adv fmz200"
+    },
+    {
+      "name": "横店电影小程序",
+      "section": "URL Rewrite",
+      "line": "^https?:\\/\\/api\\.hengdianfilm\\.com\\/\\/cinema\\/queryAvailableBannerInfo\\/1 https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/hengdian.json 302"
+    },
+    {
+      "name": "i3",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/www\\.i3zh\\.com cm-pop-up-banners fmz200"
+    },
+    {
+      "name": "京喜",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/api\\.m\\.jd\\.com\\/client\\.action\\?functionId=lite_advertising jdLiteAdvertisingVO fmz200"
+    },
+    {
+      "name": "京喜",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/api\\.m\\.jd\\.com\\/client\\.action\\?functionId=lite_SmartPush pushData fmz200"
+    },
+    {
+      "name": "建行生活",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/yunbusiness\\.ccb\\.com\\/basic_service\\/txCtrl\\? \"TAG_AD_INFO\" \"fmz200\""
+    },
+    {
+      "name": "建行生活",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/waimai-guide\\.ele\\.me\\/\\w+\\/mtop\\.venus\\.shopresourceservice\\.getshopresource posterList fmz200"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(apissl|az2-api(-js|-idc)?)\\.(gifshow|ksapisrv)\\.com\\/rest\\/system\\/startup\\? 'delpaths([[\"reskinConfig\"]])'"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(apissl|az2-api(-js|-idc)?)\\.(gifshow|ksapisrv)\\.com\\/rest\\/system\\/startup\\? 'delpaths([[\"sidebarExSquareStyle\",\"moreList\"]])'"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(apissl|az2-api(-js|-idc)?)\\.(gifshow|ksapisrv)\\.com\\/rest\\/system\\/startup\\? 'delpaths([[\"sidebarExSquareStyle\",\"topList\"]])'"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(apissl|az2-api(-js|-idc)?)\\.(gifshow|ksapisrv)\\.com\\/rest\\/system\\/startup\\? '.sidebarExSquareStyle.commonlyUsedList |= map(select("
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/az2-live\\.ksapisrv\\.com\\/rest\\/n\\/live\\/feed\\/square\\/refresh\\? 'delpaths([[\"data\",\"banners\"]])'"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/az4-api(-idc)?\\.ksapisrv\\.com\\/rest\\/n\\/feed\\/selectionFast\\? 'if (.feeds | type) == \"array\" then .feeds |= map(select(.ad | not)) e"
+    },
+    {
+      "name": "快手",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/az2-api-js\\.gifshow\\.com\\/rest\\/n\\/user\\/profile\\/v2\\? 'delpaths([[\"postRecommends\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adsplash\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adIsConsumable\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adProductId\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"nologin_tips\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"index_banner\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"me_banner\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"index_banner_shadow\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adshongbao\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adsapp_homepage_ticket_pop\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adsoptimizationsend\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adsapp_activity_ad_array\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adbanner\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adposition\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/mobile\\/mobileapi\\.do$ 'delpaths([[\"adShowAgainTime\"]])'"
+    },
+    {
+      "name": "快递100",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/p\\.kuaidi100\\.com\\/apicenter\\/xcx\\.dox 'delpaths([[\"data\",\"secondMenuList\"]])'"
+    },
+    {
+      "name": "看东方（百视TV）",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/bp-api\\.bestv\\.cn\\/cms\\/api\\/free\\/open\\/advertisingV2 '.dt = []'"
+    },
+    {
+      "name": "看东方（百视TV）",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/bp-api\\.bestv\\.cn\\/cms\\/api\\/c\\/search\\/hot\\/v(2|4) '.dt.hot = [] | .dt.recommand = [] | .dt.bannerList = []'"
+    },
+    {
+      "name": "每日精选",
+      "section": "Body Rewrite",
+      "line": "http-response-jq http:\\/\\/dili.sqcosmos.com\\/jiekou\\/mains\\/p\\d+.html '.album |= map(select(.id != \"4154\" and .id != \"4165\"))'"
+    },
+    {
+      "name": "拼多多",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/mobile\\.yangkeduo\\.com\\/proxy\\/api\\/api\\/express\\/post\\/waybill\\/red_packet\\/goods_list$ \"list\":\\[.+\\] \"list\":[]"
+    },
+    {
+      "name": "朴朴超市",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/j1\\.pupuapi\\.com\\/client\\/notification\\/message_center\\/unread_number '.data = []'"
+    },
+    {
+      "name": "汽水音乐",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/beta-luna\\.douyin\\.com\\/luna\\/card\\? 'if (getpath([\"card_items\",0]) | has(\"priority_display\")) then (setpath([\"card_items\",0,\"priori"
+    },
+    {
+      "name": "汽水音乐",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/beta-luna\\.douyin\\.com\\/luna\\/card\\? 'if (getpath([\"card_items\",0]) | has(\"is_show\")) then (setpath([\"card_items\",0,\"is_show\"]; fals"
+    },
+    {
+      "name": "汽水音乐",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/beta-luna\\.douyin\\.com\\/luna\\/card\\? 'if (getpath([]) | has(\"preview_guide\")) then (setpath([\"preview_guide\"]; null)) else . end'"
+    },
+    {
+      "name": "汽水音乐",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/beta-luna\\.douyin\\.com\\/luna\\/more-panel\\? 'delpaths([[\"blocks\",1]])'"
+    },
+    {
+      "name": "RARBG",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/dyncdn\\.me\\/static\\/\\d{0,2}\\/js\\/showads\\.js$ true false"
+    },
+    {
+      "name": "瑞幸咖啡",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/capi\\.lkcoffee\\.com\\/resource\\/m\\/sys\\/app\\/adposNew \\{.+\\} {\"status\":\"SUCCESS\"}"
+    },
+    {
+      "name": "瑞幸咖啡",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/m\\.lkcoffee\\.com\\/ecapi\\/resource\\/m\\/member\\/exchange\\/page \\{.+\\} {\"status\":\"SUCCESS\"}"
+    },
+    {
+      "name": "瑞幸咖啡",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/m\\.lkcoffee\\.com\\/capi\\/resource\\/m\\/growUp\\/main \"popTitle\":\".+?\" \"popTitle\":\"\""
+    },
+    {
+      "name": "Spotify",
+      "section": "URL Rewrite",
+      "line": "^https:\\/\\/(?:\\w+-spclient|spclient\\.wg)\\.spotify\\.com(?::443)?\\/artistview\\/v1\\/artist\\/(.*)&platform=iphone https://spclient.wg.spotify.com/artistview/v1/arti"
+    },
+    {
+      "name": "台铃智能",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https://www\\.tailgdd\\.com/v8/smart/app/config/get$ 'if (getpath([]) | has(\"data\")) then (setpath([\"data\"]; {})) else . end'"
+    },
+    {
+      "name": "天府市民云",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/tft-app\\.cdtft\\.cn\\/gateway-customer\\/tftapp\\/tft-ams\\/api\\/appAd officialAdvertResultVo fmz200"
+    },
+    {
+      "name": "天府银行小程序",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/chl\\.tf\\.cn\\/channelmg\\/sys\\/socso\\/order\\/queryOrderInfo \"imgUrl\" response-body"
+    },
+    {
+      "name": "途家民宿",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/client\\.tujia\\.com\\/bnbapp-node\\/app\\/portal\\/getportalconfig\\/bnb\\/v2 \"banners\":\\[.+\\], \"banners\":[],"
+    },
+    {
+      "name": "万达电影",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/misc-api-prd-mx\\.wandafilm\\.com\\/commend\\/common_banner_batch\\.api '.data.objects[\"OpenAPP-&-FlashAD\"] = [] | .data.objects[\"InTheat"
+    },
+    {
+      "name": "万达电影",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/misc-api-prd-mx\\.wandafilm\\.com\\/commend\\/common_banner_batch\\.api\\?bannerInfos=%5B%7B%22cinemaI \"WX_index_mp-&-boxAD\" \"fmz200\""
+    },
+    {
+      "name": "微信公众号",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/mp\\.weixin\\.qq\\.com\\/mp\\/getappmsgad advertisement fmz200"
+    },
+    {
+      "name": "网易大神",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/app-conf\\.ds\\.163\\.com\\/v\\d\\/app\\/base\\/conf\\/static\\/start-config\\? 'delpaths([[\"result\",\"updateConfig\",2,\"itemList\",94,\"itemList\","
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/discovery-feed\\/v\\d\\/mix\\/ '.heData |= map(select(.item.list[].bizType != \"SceneListenCar"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/discovery-category\\/customCategories\\/ '.categoryList |= map(.itemList |= map(select(.tit"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/football-portal\\/diff2\\/batch\\? 'delpaths([[\"json\",\"ad\"]])'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/football-portal\\/diff2\\/batch\\? 'delpaths([[\"json\",\"toc\"]])'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/nexus-web\\/v\\d\\/tabs\\/customTabs\\? '.data.feedTabs |= map(select(.name != \"大赛\"))'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/mobwsa\\.ximalaya\\.com\\/mobile-playpage\\/playpage\\/tabs\\/v2\\/ 'delpaths([[\"data\",\"playpage\",\"resourceMap\",\"defaultResource\"]])'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/mobwsa\\.ximalaya\\.com\\/mobile-playpage\\/playpage\\/tabs\\/v2\\/ 'delpaths([[\"data\",\"playpage\",\"resourceMap\",\"playPageTip\"]])'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/mobile-user\\/v\\d\\/homePage\\/ 'delpaths([[\"data\",\"freeListenV2\"]])'"
+    },
+    {
+      "name": "喜马拉雅",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/(mobile|mobilehera|mobwsa)\\.ximalaya\\.com\\/mobile-user\\/v\\d\\/homePage\\/ '.data.serviceModule.entrances |= map(select(.name == \"全部服务\""
+    },
+    {
+      "name": "小宇宙",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/api\\.xiaoyuzhoufm\\.com\\/v1\\/discovery-feed\\/list '.data |= map(select(.type != \"DISCOVERY_HEADER\" and .type != \"DISCOVERY_BANNER\"))"
+    },
+    {
+      "name": "小特 - 首选特斯拉中文社区",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/lcen\\.xiaote\\.net\\/api\\/graphql screenSplashAd fmz200"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idlemtopsearch\\.search\\.shade\\/ 'del(.data)'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.user\\.strategy\\.list\\/ 'del(.data)'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.group\\.myself\\.banner\\/ '.data.bannerList = []'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.playboy\\.recommend\\/2\\.0 '.data.recommends = [] | .data.items = [] | .data.next = fals"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.item\\.recommend\\.list\\/ '.data.cardList = []'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.fun\\.follow\\.often\\.visit '.data.sections = []'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.circle\\.myself\\.banner\\/1\\.0 '.data.bannerList = []'"
+    },
+    {
+      "name": "闲鱼",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https:\\/\\/acs\\.m\\.goofish\\.com\\/gw\\/mtop\\.taobao\\.idle\\.circle\\.visited\\/1\\.0 '.data.visitedCircleList = []'"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/search\\/firstPage\\/getPromptList\\/v1\\?.* '. = { returnStatus: \"SUCCEED\", hasMore: false, data: [] }'"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/benefits\\/benefitsCard\\/getInfo\\/v1\\?.* '. = { returnStatus: \"SUCCEED\", hasMore: false, data: [] }'"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/content\\/booth\\/getBoothList\\/v1\\?.*showPositionCode=VWAPP_HOME_BUOY '. = { returnStatus: \"SUCCEED\", hasMo"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/content\\/booth\\/getBoothList\\/v1\\?.*showPositionCode=VWAPP_(ICE|MEB)_(OPEN_SCREEN_ADS|CAR_ZHIHU_COLLEGE) '"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/content\\/booth\\/getBoothList\\/v1\\?.*showPositionCode=VWAPP_(ICE|MEB)_HOME_(OWNER_BANNER|PROSPECTS_BANNER|C"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/content\\/(customize\\/getCustomizePageName|recommend\\/getRecommendInfoFlows|activity\\/getSquareActivityList"
+    },
+    {
+      "name": "一汽大众",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/oneapp-api\\.faw-vw\\.com\\/content\\/(collection\\/getCollectionList)\\/v1\\?.* '. = { returnStatus: \"SUCCEED\", hasMore: false, data: {} "
+    },
+    {
+      "name": "游戏时光",
+      "section": "URL Rewrite",
+      "line": "^(http:\\/\\/www\\.vgtime\\.com\\/app\\/topic\\/\\d+\\.jhtml\\?.*?&close_ad=)false(&page=\\d&sign=\\w+&timestamp=\\d+&font_size=\\d$) $1true$2 302"
+    },
+    {
+      "name": "游民星空",
+      "section": "Body Rewrite",
+      "line": "http-response-jq http:\\/\\/.+\\.gamersky.com/.+/lists/getListElements '.listElements |= map(select(has(\"adCategory\") | not))'"
+    },
+    {
+      "name": "浙里办",
+      "section": "Body Rewrite",
+      "line": "http-response-jq ^https?:\\/\\/portal\\.zjzwfw\\.gov\\.cn\\/app_api\\/appHome\\/selectStartPic 'if (getpath([]) | has(\"data\")) then (setpath([\"data\"]; {})) else . end'"
+    },
+    {
+      "name": "知乎",
+      "section": "URL Rewrite",
+      "line": "^https:\\/\\/link\\.zhihu\\.com\\/\\?target=(?:https?)?(?:%3A|:)?(?:\\/\\/|%2F%2F)?(.*) http://$1 302"
+    },
+    {
+      "name": "知乎",
+      "section": "Body Rewrite",
+      "line": "http-response ^https:\\/\\/api\\.zhihu\\.com\\/search\\/recommend_query\\/v2\\? \"recommend_queries\":\\{.+\\} \"recommend_queries\":{}"
+    },
+    {
+      "name": "转转",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/app\\.zhuanzhuan\\.com\\/zz\\/v2\\/zzinfoshow\\/getfeedflowinfo\\? userRed fmz200"
+    },
+    {
+      "name": "转转",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/app\\.zhuanzhuan\\.com\\/zz\\/v2\\/zzinfoshow\\/getchoicegoodsinfos infoData fmz200"
+    },
+    {
+      "name": "郑好办",
+      "section": "Body Rewrite",
+      "line": "http-response ^https?:\\/\\/app-izz\\.zhengzhou\\.gov\\.cn:10019\\/bizgw\\/gateway\\.do \"imgUrl19_5x9\":\".+?\" \"imgUrl19_5x9\":\"\""
+    }
+  ]
+}
