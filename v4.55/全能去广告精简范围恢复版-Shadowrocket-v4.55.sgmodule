@@ -1108,14 +1108,72 @@ URL-REGEX,"^https?:\/\/(?:[^\/]*\.)?(?:ad|ads|adserver|adservice|advert|advertis
 URL-REGEX,"^https?:\/\/[^\/]+\/(?:[^?]*\/)?(?:ad|ads|adimg|adimage|adimages|adresource|adresources|admaterial|admaterials|advert|advertise|advertising|advertisement|advertisements|adservice|adserver|adconfig|adinfo|adlist|adrequest|adslot|adunit|splash|splash_config|splash_info|splash_screen|splash_ads?|splashAd|splashConfig|splashInfo|splashScreen|splashScreenInfo|startup|startup_ad|startupAd|openscreen|open_screen|openScreen|open_screen_ad|openScreenAd|startpicture|startpage_ad|start_ad|startAd|boot_ad|bootAd|cold_start|coldstart|launch_screen|launchScreen|first_screen|firstScreen|openingBanner|open_advertisement|app_open_screen_ad|appOpenScreen|launch_ad|launchAd|getAppStartAd|getAppSplash|getSplashAd|getStartAd|getStartupAd|getOpenscreenBanners|get_splash_screen_info|start_screen_ads|queryStartAdvertisement)(?:[\/?&._-]|$)[^?]*(?:\?.*)?$",REJECT-DICT
 URL-REGEX,"^https?:\/\/[^\/]+\/[^?]*\?(?:[^#]*&)?(?:ad|ads|advert|advertisement|advertising|adconfig|ad_config|adinfo|ad_info|adlist|ad_list|adrequest|ad_request|adslot|ad_slot|adunit|ad_unit|adspace|ad_space|splash|startup|openscreen|launch_ad|launchAd)(?:=|%3D|&|$)[^#]*$",REJECT-DICT
 
-# v4.55 闲鱼/淘宝 QUIC 阻断：防止 QUIC 协议绕过 MITM 导致开屏广告复发
-# Shadowrocket 无法 MITM 解密 QUIC 流量，闲鱼可能通过 QUIC 加载广告
-# 阻断 taobao/goofish 的 QUIC 流量，强制回退到 TCP(TLS) 使 MITM 规则生效
+# v4.55 全平台 QUIC 阻断：防止 QUIC 协议绕过 MITM 导致开屏广告复发
+# Shadowrocket 无法 MITM 解密 QUIC 流量，所有使用 QUIC 的 App 都会绕过去广告规则
+# 阻断 QUIC 后 App 回退到 TCP(TLS)，使 MITM 的 URL Rewrite/Map Local/Body Rewrite 规则生效
+# 覆盖模块中所有有 MITM 规则的主要中国互联网平台
 AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,taobao.com)),REJECT-DROP
 AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,goofish.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,tmall.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,alibaba.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,alicdn.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,aliyuncs.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,bilibili.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,bilivideo.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,bilivideo.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,douyucdn.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,douyucdn.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,douyutv.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,meituan.net)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,dianping.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,dpfile.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,baidu.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,bcebos.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,bdstatic.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,qq.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,gtimg.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,gtimg.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,gdtimg.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,iqiyi.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,iqiyipic.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,youku.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,jd.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,xiaohongshu.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,xhscdn.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,ctrip.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,12306.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,kuaishou.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,ksapisrv.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,pddpic.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,pinduoduo.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,yangkeduo.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,snssdk.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,amap.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,netease.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,126.net)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,163.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,weibo.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,sina.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,sina.com.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,sohu.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,suning.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,vip.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,58cdn.com.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,coolapk.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,csdn.net)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,chelaile.net.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,chelaileapp.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,shunchangzhixing.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,huachenjie.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,8ziben.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,hzjizhun.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,sm.cn)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,zhihu.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,zhihuimg.com)),REJECT-DROP
+AND,((PROTOCOL,QUIC),(DOMAIN-SUFFIX,zhimg.com)),REJECT-DROP
 
-# v4.55 闲鱼请求级开屏广告拦截：不依赖 MITM，即使外部分流 DIRECT 也能拦截
-# 覆盖闲鱼开屏广告接口 idlecommerce.splash.ads 及其变体
+# v4.55 闲鱼请求级开屏广告拦截：覆盖闲鱼开屏广告接口 idlecommerce.splash.ads 及其变体
+# 注意：URL-REGEX 对 HTTPS 需 MITM 才能看到完整路径，此规则在 QUIC 阻断后 MITM 生效时起作用
 URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
 URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.home\.splash",REJECT-DICT
 URL-REGEX,"^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
