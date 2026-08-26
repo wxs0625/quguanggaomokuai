@@ -1,5 +1,5 @@
 #!name=全能去广告精简范围恢复版 v4.61
-#!desc=基于 v4.57 重建：新增路由层广告SDK域名REJECT(不依赖MITM，覆盖多App首次开屏)，闲鱼/酷安强制走代理恢复净化，恢复酷安规则。
+#!desc=基于 v4.57 修复多软件第一次冷启动开屏广告：新增路由级广告SDK域名阻断（不需要MITM，路由层直接拒绝连接），沿用 v4.59 的 GDT/有道收窄策略，保留全局QUIC阻断。
 #!author=来源：本地 Modules 单独模块 + fmz200/wool_scripts；整合：Codex
 #!homepage=https://github.com/wxs0625/quguanggaomokuai
 #!category=去广告
@@ -501,9 +501,6 @@
 ^https:\/\/www\.xiaohongshu\.com\/api\/sns\/(?:v1\/ads\/resource|v2\/hey\/\w+\/hey_gallery) - reject-dict
 ^https?:\/\/mp\.weixin\.qq\.com\/mp\/cps_product_info\?action - reject-dict
 
-# v4.61 酷安：恢复热搜词广告拦截（移植自 v4.60）
-^https:\/\/api\.coolapk\.com\/v6\/search\?.*type=hotSearch - reject-dict
-
 [Map Local]
 # v4.44 网易云音乐：继承 v4.43 日志确认的 xeapi 广告接口空响应
 ^https?:\/\/(ipv4|interface\d?)\.music\.163\.com\/e?api\/ad data-type=text data="{}" status-code=200 header="Content-Type:application/json"
@@ -913,21 +910,7 @@ http-response-jq ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v4\/search\/trend
 http-response-jq ^https:\/\/ad\.12306\.cn\/ad\/ser\/getAdList$ 'delpaths([["materialsList"]])'
 http-response-jq ^https:\/\/ad\.12306\.cn\/ad\/ser\/getAdList$ 'delpaths([["advertParam"]])'
 
-# v4.61 酷安：恢复开屏/信息流/详情页/评论广告净化（移植自 v4.60，需 MITM 走代理）
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/feed\/detail\? '.data.hotReplyRows |= if . then map(select(.id?)) else . end | .data.topReplyRows |= if . then map(select(.id?)) else . end | reduce ("detailSponsorCard", "include_goods", "include_goods_ids") as $key (.; .data[$key]=[])'
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/feed\/replyList 'if .data? and ((.data | type) == "array") and (.data | length > 0) then .data |= map(select(.id?)) else . end'
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/main\/dataList '.data |= (if (type=="array" and length>0) then map(select((.entityTemplate!="sponsorCard") and (.title!="精选配件"))) else . end)'
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/page\/dataList 'if (.data | length > 0) then .data |= map(select((.title? != "酷安热搜") and (.entityTemplate? != "imageScaleCard") and (.entityTemplate? != "sponsorCard"))) else . end'
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/main\/indexV8 '.data |= (if length > 0 then map(select((.entityTemplate != "sponsorCard") and ([8639,29349,33006,32557] | index(.entityId) | not) and ((.title// "" | test("值得买|红包")) | not))) else . end)'
-http-response-jq ^https:\/\/api\.coolapk\.com\/v6\/main\/init '.data |= map(select(.entityId? | [944,945,6390] | index(.) | not) | if .entityId == 20131 then .entities |= map(select(.title != "酷品")) else . end)'
-
 [Script]
-# v4.61 酷安：恢复脚本净化（移植自 v4.60，需 MITM 走代理）
-酷安 = type=http-response, pattern=^https?:\/\/api\.coolapk\.com\/v6\/feed\/(detail|replyList)\?, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60
-酷安 #2 = type=http-response, pattern=^https?:\/\/api\.coolapk\.com\/v6\/main\/(dataList|indexV8|init), script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60
-酷安 #3 = type=http-response, pattern=^https?:\/\/api\.coolapk\.com\/v6\/page\/dataList\?, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/coolapk.js, requires-body=true, timeout=60
-酷安URL重定向 = type=http-request, pattern=^https:\/\/www\.coolapk\.com\/link.*, script-path=https://raw.githubusercontent.com/VenenoSix24/Ivy-Script/refs/heads/main/Loon/script/Coolapk_Redirect.js, requires-body=false, timeout=10
-
 # v4.36 腾讯视频：完整保留单独模块规则
 v435_腾讯视频_移除广告 = type=http-request, pattern=^https?:\/\/vv\.video\.qq\.com\/getvinfo, script-path=https://kelee.one/Resource/JavaScript/CommonScript/replace-body.js, requires-body=true, argument="&sppreviewtype=\d(.*)&spsrt=\d->&sppreviewtype=0$1&spsrt=0"
 
@@ -1113,16 +1096,6 @@ youtube.request.log_event = type=http-request, pattern=^https:\/\/youtubei\.goog
 
 [Rule]
 
-# v4.61 闲鱼/酷安主接口强制走代理：覆盖外部规则集把 goofish/coolapk 判为 DIRECT 的情况。
-# 实测流量日志证明：外部规则集将 goofish.com/coolapk.com 路由为 DIRECT，
-# 流量不经代理 → 无法 MITM 解密 → URL Rewrite/Body Rewrite/Script 全部失效，
-# 首次冷启动开屏广告漏过（后续启动读缓存才无广告）。模块规则匹配优先于外部规则，
-# 置顶 ,PROXY 可强制这两个 App 主接口走代理节点，MITM 净化规则恢复生效。
-# 注意：必须放在所有规则之前（包括 DIRECT 例外），否则先命中 DIRECT。
-DOMAIN,acs.m.goofish.com,PROXY
-DOMAIN,g-acs.m.goofish.com,PROXY
-DOMAIN-SUFFIX,coolapk.com,PROXY
-
 # v4.51 京东业务直连例外：避免旧版京东模块误拦启动所需服务
 DOMAIN,dns.jd.com,DIRECT
 DOMAIN,policy.jd.com,DIRECT
@@ -1142,26 +1115,15 @@ URL-REGEX,"^https?:\/\/[^\/]+\/[^?]*\?(?:[^#]*&)?(?:ad|ads|advert|advertisement|
 # 使用 REJECT（立即拒绝+RST）而非 REJECT-DROP（静默丢包），避免 3-10 秒超时等待
 PROTOCOL,QUIC,REJECT
 
-# v4.57 闲鱼请求级开屏广告拦截：覆盖闲鱼开屏广告接口 idlecommerce.splash.ads 及其变体
-# 注意：URL-REGEX 对 HTTPS 需 MITM 才能看到完整路径，此规则在 QUIC 阻断后 MITM 生效时起作用
-URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
-URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.home\.splash",REJECT-DICT
-URL-REGEX,"^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
-# 闲鱼广告素材域名
-DOMAIN,adashx.m.taobao.com,REJECT
-DOMAIN,adash.man.aliyuncs.com,REJECT
-
-# v4.61 路由级广告SDK域名阻断（移植自 v4.58/v4.59）：在路由层直接拒绝广告SDK连接，不需要MITM解密即可生效
-# 这是修复"很多软件第一次冷启动开屏有广告，后边再次启动就没有了"的核心方案：
+# v4.61 路由级广告SDK域名阻断（自 v4.58/v4.59 移植，已按 v4.57 现有规则去重）：
+# 在路由层直接拒绝广告SDK连接，不需要MITM解密即可生效。
+# 这是修复"第一次冷启动开屏广告"的不依赖MITM的方案：
 #   - 冷启动时App先请求广告SDK域名获取开屏广告，这些域名多走HTTPS
 #   - URL Rewrite/Map Local/Script 都需要MITM解密才能处理HTTPS请求
-#   - 如果广告SDK域名不在MITM hostname列表中，或流量未走代理，MITM无法解密 → 广告请求成功
-#   - DOMAIN/DOMAIN-SUFFIX REJECT 在路由层生效，不需要MITM，直接拒绝TCP连接
+#   - DOMAIN-SUFFIX REJECT 在路由层生效，不需要MITM，直接拒绝TCP连接
 #   - 即使DNS预解析在VPN隧道就绪前完成，连接仍会被路由层拒绝
-#   - 首次启动广告配置被成功拉取后缓存，所以后续启动无广告；阻断后缓存为空，彻底解决
-# v4.57只靠QUIC阻断+URL-REGEX兜底，但URL-REGEX对HTTPS仍需MITM → 仍有遗漏
-# 本块补全所有主流广告SDK域名的路由级阻断
-
+# v4.57 只靠 QUIC 阻断 + URL-REGEX 兜底，但 URL-REGEX 对 HTTPS 仍需 MITM → 仍有遗漏
+# 此处补全主流广告SDK域名的路由级阻断（沿用 v4.59 的 GDT/有道收窄策略）
 # === 字节跳动/穿山甲(Pangle/CSJ)广告SDK ===
 # is.snssdk.com 是穿山甲SDK的核心广告服务域名，大量App集成
 DOMAIN-SUFFIX,is.snssdk.com,REJECT
@@ -1182,7 +1144,6 @@ DOMAIN-SUFFIX,pangolin-sdk.com,REJECT
 DOMAIN-SUFFIX,pangolin-server.com,REJECT
 DOMAIN-SUFFIX,pangolinvideosdk.com,REJECT
 DOMAIN-SUFFIX,pangolinsdk.com,REJECT
-DOMAIN-SUFFIX,adukwai.com,REJECT
 DOMAIN-SUFFIX,adukwai.cn,REJECT
 DOMAIN-SUFFIX,oceanengine.com,REJECT
 DOMAIN-SUFFIX,pmp.toutiao.com,REJECT
@@ -1190,155 +1151,55 @@ DOMAIN-SUFFIX,ads.toutiao.com,REJECT
 DOMAIN-SUFFIX,ds.toutiao.com,REJECT
 DOMAIN-SUFFIX,ad.oceanengine.com,REJECT
 DOMAIN-SUFFIX,ad.oceanengine.cn,REJECT
-
 # === 腾讯广告(GDT/优量汇)补全 ===
-DOMAIN-SUFFIX,gdt.qq.com,REJECT
-# v4.59 修复：gdtimg.com/gtimg.cn/qq.cn 过于宽泛，会阻断腾讯CDN正常功能
-# 改为只拦截广告相关子域名
-DOMAIN-SUFFIX,adsmind.gdtimg.com,REJECT
+# 沿用 v4.59 收窄：gdtimg.com/gtimg.cn/qq.cn 过于宽泛，会阻断腾讯CDN正常功能，只拦截广告相关子域名
 DOMAIN-SUFFIX,gdt.gtimg.cn,REJECT
-DOMAIN-SUFFIX,mi.gdt.qq.com,REJECT
-DOMAIN-SUFFIX,win.gdt.qq.com,REJECT
-
 # === 快手广告SDK ===
-DOMAIN-SUFFIX,open.e.kuaishou.com,REJECT
-DOMAIN-SUFFIX,open.e.kuaishou.cn,REJECT
 DOMAIN-SUFFIX,ad.e.kuaishou.com,REJECT
 DOMAIN-SUFFIX,ad.e.kuaishou.cn,REJECT
-DOMAIN-SUFFIX,adtrack.e.kuaishou.com,REJECT
-DOMAIN-SUFFIX,gdfp.gifshow.com,REJECT
 DOMAIN-SUFFIX,open.kuaishou.com,REJECT
 DOMAIN-SUFFIX,open.kuaishou.cn,REJECT
-
 # === 阿里巴巴广告(Tanx)补全 ===
 DOMAIN-SUFFIX,tanx.com,REJECT
 DOMAIN-SUFFIX,ad.aliyun.com,REJECT
-DOMAIN-SUFFIX,acs4baichuan.m.taobao.com,REJECT
-DOMAIN-SUFFIX,adashxgc.ut.taobao.com,REJECT
-
-# === 百度广告补全 ===
-DOMAIN-SUFFIX,mobads.baidu.com,REJECT
-DOMAIN-SUFFIX,mobads-logs.baidu.com,REJECT
-DOMAIN-SUFFIX,nsclick.baidu.com,REJECT
-DOMAIN-SUFFIX,cpro.baidu.com,REJECT
-DOMAIN-SUFFIX,pos.baidu.com,REJECT
-DOMAIN-SUFFIX,afd.baidu.com,REJECT
-DOMAIN-SUFFIX,als.baidu.com,REJECT
-DOMAIN-SUFFIX,duclick.baidu.com,REJECT
-
 # === Mintegral/Mobvista（海外+国内广告SDK） ===
 DOMAIN-SUFFIX,mintegral.com,REJECT
 DOMAIN-SUFFIX,mintegral.net,REJECT
 DOMAIN-SUFFIX,mobvista.com,REJECT
-DOMAIN-SUFFIX,mobrtb.com,REJECT
 DOMAIN-SUFFIX,mobgi.com,REJECT
 DOMAIN-SUFFIX,mobcpc.com,REJECT
 DOMAIN-SUFFIX,algorix.co,REJECT
-
 # === AppLovin广告SDK ===
-DOMAIN-SUFFIX,applovin.com,REJECT
 DOMAIN-SUFFIX,applovinad.com,REJECT
-DOMAIN-SUFFIX,applvn.com,REJECT
-
 # === Google广告补全 ===
-DOMAIN-SUFFIX,doubleclick.net,REJECT
-DOMAIN-SUFFIX,doubleclick-cn.net,REJECT
-DOMAIN-SUFFIX,googlesyndication.com,REJECT
-DOMAIN-SUFFIX,googlesyndication-cn.com,REJECT
 DOMAIN-SUFFIX,googleadservices.com,REJECT
 DOMAIN-SUFFIX,google-analytics.com,REJECT
-DOMAIN-SUFFIX,pagead2.googlesyndication.com,REJECT
 DOMAIN-SUFFIX,adservice.google.com,REJECT
-
-# === Unity Ads ===
-DOMAIN-SUFFIX,unityads.unity3d.com,REJECT
-DOMAIN-SUFFIX,unityads.unitychina.cn,REJECT
-DOMAIN-SUFFIX,iads.unity3d.com,REJECT
-
-# === Vungle广告SDK ===
-DOMAIN-SUFFIX,vungle.com,REJECT
-DOMAIN-SUFFIX,vungle.cn,REJECT
-
 # === Sigmob广告SDK ===
-DOMAIN-SUFFIX,sigmob.cn,REJECT
 DOMAIN-SUFFIX,sigmob.com,REJECT
-DOMAIN-SUFFIX,adservice.sigmob.cn,REJECT
-
 # === AdMob/MobileAds补全 ===
 DOMAIN-SUFFIX,admob.com,REJECT
-DOMAIN-SUFFIX,admob.xiaomi.com,REJECT
-DOMAIN-SUFFIX,17admob.com,REJECT
-
 # === AdView广告SDK ===
-DOMAIN-SUFFIX,adview.cn,REJECT
 DOMAIN-SUFFIX,adview.com,REJECT
-DOMAIN-SUFFIX,bid.adview.cn,REJECT
-
-# === 1rtb广告 ===
-DOMAIN-SUFFIX,zlsdk.1rtb.net,REJECT
-DOMAIN-SUFFIX,1rtb.net,REJECT
-
 # === 其他主流广告SDK域名补全 ===
-DOMAIN-SUFFIX,adcolony.com,REJECT
-DOMAIN-SUFFIX,chartboost.com,REJECT
-DOMAIN-SUFFIX,ironsrc.com,REJECT
-DOMAIN-SUFFIX,supersonic.com,REJECT
-DOMAIN-SUFFIX,supersonicads.com,REJECT
-DOMAIN-SUFFIX,inmobi.com,REJECT
-DOMAIN-SUFFIX,inmobi.cn,REJECT
-DOMAIN-SUFFIX,inmobicdn.cn,REJECT
-DOMAIN-SUFFIX,inmobi.net,REJECT
-DOMAIN-SUFFIX,inmobicdn.net,REJECT
-DOMAIN-SUFFIX,mopub.com,REJECT
-DOMAIN-SUFFIX,flurry.com,REJECT
-DOMAIN-SUFFIX,pubmatic.com,REJECT
-DOMAIN-SUFFIX,rubiconproject.com,REJECT
-DOMAIN-SUFFIX,openx.net,REJECT
-DOMAIN-SUFFIX,smartadserver.com,REJECT
-DOMAIN-SUFFIX,criteo.com,REJECT
-DOMAIN-SUFFIX,criteo.net,REJECT
-DOMAIN-SUFFIX,casalemedia.com,REJECT
-DOMAIN-SUFFIX,moatads.com,REJECT
-DOMAIN-SUFFIX,scorecardresearch.com,REJECT
-DOMAIN-SUFFIX,quantserve.com,REJECT
-DOMAIN-SUFFIX,quantcount.com,REJECT
-DOMAIN-SUFFIX,tapjoy.com,REJECT
-DOMAIN-SUFFIX,tapjoy.cn,REJECT
-DOMAIN-SUFFIX,tapjoyads.com,REJECT
-DOMAIN-SUFFIX,smaato.net,REJECT
-DOMAIN-SUFFIX,amplitude.com,REJECT
-DOMAIN-SUFFIX,amazon-adsystem.com,REJECT
-DOMAIN-SUFFIX,adsrvr.cn,REJECT
-DOMAIN-SUFFIX,adsrvr.org,REJECT
-DOMAIN-SUFFIX,adhouyi.com,REJECT
-DOMAIN-SUFFIX,adchina.com,REJECT
-DOMAIN-SUFFIX,adchina.io,REJECT
 DOMAIN-SUFFIX,adsame.com,REJECT
 DOMAIN-SUFFIX,adsame.cn,REJECT
-DOMAIN-SUFFIX,domob.cn,REJECT
 DOMAIN-SUFFIX,domob.com,REJECT
-DOMAIN-SUFFIX,madhouse.cn,REJECT
 DOMAIN-SUFFIX,madhouse.com,REJECT
-DOMAIN-SUFFIX,madserving.com,REJECT
-DOMAIN-SUFFIX,mediav.com,REJECT
-DOMAIN-SUFFIX,ipinyou.com,REJECT
-# v4.59 修复：youdao.com 是有道词典主域名，全盘 REJECT 会破坏查词功能
-# 改为只拦截广告/统计相关子域名
-DOMAIN-SUFFIX,dsp-impr2.youdao.com,REJECT
-DOMAIN-SUFFIX,clkservice.youdao.com,REJECT
+# 沿用 v4.59 收窄：youdao.com 是有道词典主域名，全盘 REJECT 会破坏查词功能，只拦截广告/统计相关子域名
 DOMAIN-SUFFIX,cl2.youdao.com,REJECT
 DOMAIN-SUFFIX,clkservice-ttkg.youdao.com,REJECT
-DOMAIN-SUFFIX,ad.nex.163.com,REJECT
 DOMAIN-SUFFIX,ad.adsvsoftware.com,REJECT
-DOMAIN-SUFFIX,analytics.talkingdata.com,REJECT
-DOMAIN-SUFFIX,applog.tenddata.com,REJECT
 DOMAIN-SUFFIX,applog.tendcloud.com,REJECT
-# umeng 统计/广告：保留原有排除，只拦截广告推送子域名
-DOMAIN-SUFFIX,log.aliyuncs.com,REJECT
-DOMAIN-SUFFIX,ulogs.umeng.com,REJECT
-DOMAIN-SUFFIX,ulogs.umengcloud.com,REJECT
-DOMAIN-SUFFIX,utoken.umeng.com,REJECT
-DOMAIN-SUFFIX,errlog.umeng.com,REJECT
+
+# v4.57 闲鱼请求级开屏广告拦截：覆盖闲鱼开屏广告接口 idlecommerce.splash.ads 及其变体
+# 注意：URL-REGEX 对 HTTPS 需 MITM 才能看到完整路径，此规则在 QUIC 阻断后 MITM 生效时起作用
+URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
+URL-REGEX,"^https?:\/\/(g-)?acs\.m\.goofish\.com\/gw\/mtop\.taobao\.idle\.home\.splash",REJECT-DICT
+URL-REGEX,"^https?:\/\/acs\.m\.taobao\.com\/gw\/mtop\.taobao\.idlecommerce\.splash(?:\.ads)?(?:\/|\?|$)",REJECT-DICT
+# 闲鱼广告素材域名
+DOMAIN,adashx.m.taobao.com,REJECT
+DOMAIN,adash.man.aliyuncs.com,REJECT
 
 
 
@@ -1455,8 +1316,9 @@ DOMAIN,mapi.weibo.com,DIRECT
 DOMAIN,weibointl.api.weibo.cn,DIRECT
 DOMAIN,weibointl.api.weibo.com,DIRECT
 DOMAIN,m.weibo.cn,DIRECT
-# v4.61：删除原 v4.57 的 api.coolapk.com/www.coolapk.com/coolapk.com DIRECT 例外，
-# 改由 [Rule] 顶部 DOMAIN-SUFFIX,coolapk.com,PROXY 强制走代理以恢复 MITM 净化。
+DOMAIN,api.coolapk.com,DIRECT
+DOMAIN,www.coolapk.com,DIRECT
+DOMAIN,coolapk.com,DIRECT
 DOMAIN,report.shunchangzhixing.com,REJECT
 URL-REGEX,^https?:\/\/(?:ad|report)\.shunchangzhixing\.com\/(?:report|channel\/report|display|click|track|event|win|upload|material|splash|ad),REJECT
 DOMAIN,api.huachenjie.com,DIRECT
@@ -3236,4 +3098,4 @@ DOMAIN-SUFFIX,l.ykimg.com,REJECT
 DOMAIN-SUFFIX,p-log.ykimg.com,REJECT
 
 [MITM]
-hostname = %APPEND% app-gw.csdn.net, gw.csdn.net, -weibo.com, -*.weibo.com, -*.weibo.cn, -api.weibo.cn, -api.weibo.com, -mapi.weibo.cn, -mapi.weibo.com, -weibointl.api.weibo.cn, -weibointl.api.weibo.com, -m.weibo.cn, -sina.cn, -*.sina.cn, -sina.com.cn, -*.sina.com.cn, -sinajs.cn, -*.sinajs.cn, -sinaimg.cn, -*.sinaimg.cn, -sinaimg.com, -*.sinaimg.com, -sina.com, -*.sina.com, -sinawap.com, -*.sinawap.com, -sinaalicdn.com, -*.sinaalicdn.com, -sinaaliyun.cn, -*.sinaaliyun.cn, report.shunchangzhixing.com, ad.lovefree.cc, ad.shunchangzhixing.com, -statistic.live.126.net, -errlog.umeng.com, -ulogs.umeng.com, -ulogs.umengcloud.com, -utoken.umeng.com, -*.umeng.com, -*.umengcloud.com, -logs.amap.com, -dualstack-logs.amap.com, -api.huachenjie.com, -oss-cdn.huachenjie.com, -api-cfg.8ziben.com, -admin.hzjizhun.cn, -*.hzjizhun.cn, gab.122.gov.cn, ad.12306.cn, tianqi.2345.com, api.u51.com, vip7.fzwdyy.cn, *.qyfxgd.cn, *.weilai555.com, *.ecoliving168.com, *.58cdn.com.cn, app.58.com, gw.aihuishou.com, -i.vip.iqiyi.com, *.iqiyi.com, list-app-m.i4.cn, api.alipan.com, member.alipan.com, acs.m.taobao.com, heic.alicdn.com, guide-acs.m.taobao.com, poplayer.template.alibaba.com, www.banyuetanapp.com, www.baidu.com, fcvbjbcebos.baidu.com, cover.baidu.com, baichuan.baidu.com, api*.tuisong.baidu.com, afd.baidu.com, mobads.baidu.com, issuecdn.baidupcs.com, update.pan.baidu.com, sa*.tuisong.baidu.com, m.baidu.com, sofire.baidu.com, appwk.baidu.com, pan.baidu.com, ndstatic.cdn.bcebos.com, staticsns.cdn.bcebos.com, fc-video.cdn.bcebos.com, rp.hpplay.cn, mime.baidu.com, tiebac.baidu.com, r6.mo.baidu.com, res.mi.baidu.com, mbd.baidu.com, cn-acs.m.cainiao.com, amdc.m.taobao.com, learn.chaoxing.com, pic1.chelaile.net.cn, api.chelaile.net.cn, atrace.chelaile.net.cn, web.chelaile.net.cn, cdn.*.chelaileapp.cn, dxy.com, dq.dxy.cn, 103.37.155.60, *.dianping.com, img.meituan.net, p.meituan.com, rms.meituan.com, www.dpfile.com, awp-assets.meituan.net, s3plus.meituan.net, p*.meituan.net, ddplus.meituan.net, ap.dongdianqiu.com, daoyu.sdo.com, rtbapi.douyucdn.cn, staticlive.douyucdn.cn, capi.douyucdn.cn, douyucdn.cn, res.xiaojukeji.com, common.diditaxi.com.cn, hd.xiaojukeji.com, freight.xiaojukeji.com, daijia.kuaidadi.com, ct.xiaojukeji.com, conf.diditaxi.com.cn, gw.alicdn.com, img.alicdn.com, elemecdn.com, fuss10.elemecdn.com, cube.elemecdn.com, www1.elecfans.com, nr-op.elemecdn.com, external.fcbox.com, dsp.fcbox.com, consumer.fcbox.com, rtm.fcbox.com, v.icbc.com.cn, pv.elife.icbc.com.cn, elife.icbc.com.cn, m*.amap.com, optimus-ads.amap.com, amap-aos-info-nogw.amap.com, cdn.133.cn, jt.rsscc.com, jp.rsscc.com, hfapp-service.qweather.net, acs-m.freshippo.com, res.hongyibo.com.cn, cdn.wup.huya.com, business.msstatic.com, cdnfile1.msstatic.com, live-ads.huya.com, api.m.jd.com, appconf.mail.163.com, support.you.163.com, yunbusiness.ccb.com, g.alicdn.com, waimai-guide.ele.me, api.gotokeep.com, kad.gotokeep.com, static1.keepcdn.com, pocketuni.net, p.kuaidi100.com, video-dsp.pddpic.com, t-dsp.pinduoduo.com, images.pinduoduo.com, tagit.hyhuo.com, api-ac.liepin.com, api-wanda.liepin.com, home.mi.com, flowplus.meituan.net, peisongapi.meituan.com, cdb.meituan.com, mea.meitudata.com, adui.tg.meitu.com, cdn.sdb.com.cn, api.pinduoduo.com, api.yangkeduo.com, mobile.yangkeduo.com, m.qianbao.qq.com, us.l.qq.com, y.gtimg.cn, music.y.qq.com, open.e.kuaishou.cn, api-cfg.wtzw.com, p1-lm.adukwai.com, webapi.qmai.cn, miniapp.qmai.cn, appapi.51job*.com, cupid.51job*.com, qde.qunar.com, homefront.qunar.com, client.qunar.com, adproxy.autohome.com.cn, app2.autoimg.cn, app.peopleapp.com, stat.peopleapp.com, adstatic.peopleapp.com, ut2.shuqistat.com, sq.sljkj.com, ocean.shuqireader.com, img-tailor.11222.cn, message.shuqireader.com, feedback.uc.cn, *.shuqireader.com, 101.91.69.26, homepage-api.smzdm.com, haojia-api.smzdm.com, app-api.smzdm.com, user-api.smzdm.com, article-api.smzdm.com, qianbao.smzdm.com, s-api.smzdm.com, haojia.m.smzdm.com, *.souhu.com, mpcs.suning.com, image.suning.com, luckman.suning.com, api.sodalife.xyz, mapi.sfbest.com, ccsp-egmas.sf-express.com, ucmp.sf-express.com, mcs-mimp-web.sf-express.com, app.homeinns.com, api.ncarzone.com, ossgw.alicdn.com, zconfig.alibabausercontent.com, api.cloud.189.cn, bid.adview.cn, ccmsupport-sz.tenpay.com, news.ssp.qq.com, sports3.gtimg.com, 4gimg.map.qq.com, btrace.qq.com, api2.helper.qq.com, *.beacon.qq.com, mi.gdt.qq.com, lives.l.qq.com, imgcache.qq.com, mtteve.beacon.qq.com, vv.video.qq.com, qt.qq.com, 3gimg.qq.com, splashqqlive.gtimg.com, qzonestyle.gtimg.cn, discuz.gtimg.cn, bla.gtimg.com, mmgr.gtimg.com, bk.bingo.qq.com, otheve.beacon.qq.com, static.gameplus.qq.com, images.client.vip.xunlei.com, api-shoulei-ssl.xunlei.com, api-marketing.zhinengxiyifang.cn, adsoss.zhinengxiyifang.cn, ads.zhinengxiyifang.cn, ios.wps.cn, mobile-pic.cache.iciba.com, mp.weixin.qq.com, weixin110.qq.com, security.wechat.com, m.you.163.com, yanxuan.nosdn.127.net, ipv4.music.163.com, interface.music.163.com, interface3.music.163.com, interface9.music.163.com, god.gameyw.netease.com, app-conf.ds.163.com, c.m.163.com, dict.youdao.com, api-overmind.youdao.com, cdke.youdao.com, dictvip-business.youdao.com, dsp-impr2.youdao.com, impservice.dictapp.youdao.com, oral.youdao.com, oimage*.ydstatic.com, client.mail.163.com, kaola-haitao.oss.kaolacdn.com, sp.kaola.com, gw.kaola.com, easyreadfs.nosdn.127.net, p.du.163.com, *.music.126.net, img1.126.net, www.icourse163.org, nex.163.com, g1.163.com, interface*.music.163.com, api-miprint.hannto.com, api.indeedpower.com, shopapi.io.mi.com, api-mifit*.huami.com, api.jr.mi.com, edith.xiaohongshu.com, www.xiaohongshu.com, ci.xiaohongshu.com, rec.xiaohongshu.com, so.xiaohongshu.com, m.ctrip.com, ma-adx.ctrip.com, api*.sparke.cn, upload-bbs.mihoyo.com, acs.m.goofish.com, g-acs.m.goofish.com, rr*.googlevideo.com, youtubei.googleapis.com, acs.youku.com, push.m.youku.com, un-acs.youku.com, www.cntv.cn, cdn.cmgadx.com, xyst.yuanfudao.com, mapi-app.bestpay.com.cn, e.weather.com.cn, cloud.189.cn, zt-app.go189.cn, xyz.cnki.net, webappcfg.paas.cmbchina.com, mbmodule-openapi.paas.cmbchina.com, api.zhihu.com, www.zhihu.com, appcloud2.zhihu.com, m-cloud.zhihu.com, zhuanlan.zhihu.com, link.zhihu.com, app.zhuanzhuan.com, app.bilibili.com, bbs-api.miyoushe.com, bbs-api-ab.miyoushe.com, bbs-api-static.miyoushe.com, api.qishui.com, api5-lq.qishui.com, api1.zongheng.com, api2.zongheng.com, apd-vlive.apdcdn.tc.qq.com, interface1.music.163.com, interface2.music.163.com, interface4.music.163.com, interface5.music.163.com, interface6.music.163.com, interface7.music.163.com, interface8.music.163.com, api.coolapk.com, www.coolapk.com
+hostname = %APPEND% app-gw.csdn.net, gw.csdn.net, -api.coolapk.com, -www.coolapk.com, -coolapk.com, -*.coolapk.com, -weibo.com, -*.weibo.com, -*.weibo.cn, -api.weibo.cn, -api.weibo.com, -mapi.weibo.cn, -mapi.weibo.com, -weibointl.api.weibo.cn, -weibointl.api.weibo.com, -m.weibo.cn, -sina.cn, -*.sina.cn, -sina.com.cn, -*.sina.com.cn, -sinajs.cn, -*.sinajs.cn, -sinaimg.cn, -*.sinaimg.cn, -sinaimg.com, -*.sinaimg.com, -sina.com, -*.sina.com, -sinawap.com, -*.sinawap.com, -sinaalicdn.com, -*.sinaalicdn.com, -sinaaliyun.cn, -*.sinaaliyun.cn, report.shunchangzhixing.com, ad.lovefree.cc, ad.shunchangzhixing.com, -statistic.live.126.net, -errlog.umeng.com, -ulogs.umeng.com, -ulogs.umengcloud.com, -utoken.umeng.com, -*.umeng.com, -*.umengcloud.com, -logs.amap.com, -dualstack-logs.amap.com, -api.huachenjie.com, -oss-cdn.huachenjie.com, -api-cfg.8ziben.com, -admin.hzjizhun.cn, -*.hzjizhun.cn, gab.122.gov.cn, ad.12306.cn, tianqi.2345.com, api.u51.com, vip7.fzwdyy.cn, *.qyfxgd.cn, *.weilai555.com, *.ecoliving168.com, *.58cdn.com.cn, app.58.com, gw.aihuishou.com, -i.vip.iqiyi.com, *.iqiyi.com, list-app-m.i4.cn, api.alipan.com, member.alipan.com, acs.m.taobao.com, heic.alicdn.com, guide-acs.m.taobao.com, poplayer.template.alibaba.com, www.banyuetanapp.com, www.baidu.com, fcvbjbcebos.baidu.com, cover.baidu.com, baichuan.baidu.com, api*.tuisong.baidu.com, afd.baidu.com, mobads.baidu.com, issuecdn.baidupcs.com, update.pan.baidu.com, sa*.tuisong.baidu.com, m.baidu.com, sofire.baidu.com, appwk.baidu.com, pan.baidu.com, ndstatic.cdn.bcebos.com, staticsns.cdn.bcebos.com, fc-video.cdn.bcebos.com, rp.hpplay.cn, mime.baidu.com, tiebac.baidu.com, r6.mo.baidu.com, res.mi.baidu.com, mbd.baidu.com, cn-acs.m.cainiao.com, amdc.m.taobao.com, learn.chaoxing.com, pic1.chelaile.net.cn, api.chelaile.net.cn, atrace.chelaile.net.cn, web.chelaile.net.cn, cdn.*.chelaileapp.cn, dxy.com, dq.dxy.cn, 103.37.155.60, *.dianping.com, img.meituan.net, p.meituan.com, rms.meituan.com, www.dpfile.com, awp-assets.meituan.net, s3plus.meituan.net, p*.meituan.net, ddplus.meituan.net, ap.dongdianqiu.com, daoyu.sdo.com, rtbapi.douyucdn.cn, staticlive.douyucdn.cn, capi.douyucdn.cn, douyucdn.cn, res.xiaojukeji.com, common.diditaxi.com.cn, hd.xiaojukeji.com, freight.xiaojukeji.com, daijia.kuaidadi.com, ct.xiaojukeji.com, conf.diditaxi.com.cn, gw.alicdn.com, img.alicdn.com, elemecdn.com, fuss10.elemecdn.com, cube.elemecdn.com, www1.elecfans.com, nr-op.elemecdn.com, external.fcbox.com, dsp.fcbox.com, consumer.fcbox.com, rtm.fcbox.com, v.icbc.com.cn, pv.elife.icbc.com.cn, elife.icbc.com.cn, m*.amap.com, optimus-ads.amap.com, amap-aos-info-nogw.amap.com, cdn.133.cn, jt.rsscc.com, jp.rsscc.com, hfapp-service.qweather.net, acs-m.freshippo.com, res.hongyibo.com.cn, cdn.wup.huya.com, business.msstatic.com, cdnfile1.msstatic.com, live-ads.huya.com, api.m.jd.com, appconf.mail.163.com, support.you.163.com, yunbusiness.ccb.com, g.alicdn.com, waimai-guide.ele.me, api.gotokeep.com, kad.gotokeep.com, static1.keepcdn.com, pocketuni.net, p.kuaidi100.com, video-dsp.pddpic.com, t-dsp.pinduoduo.com, images.pinduoduo.com, tagit.hyhuo.com, api-ac.liepin.com, api-wanda.liepin.com, home.mi.com, flowplus.meituan.net, peisongapi.meituan.com, cdb.meituan.com, mea.meitudata.com, adui.tg.meitu.com, cdn.sdb.com.cn, api.pinduoduo.com, api.yangkeduo.com, mobile.yangkeduo.com, m.qianbao.qq.com, us.l.qq.com, y.gtimg.cn, music.y.qq.com, open.e.kuaishou.cn, api-cfg.wtzw.com, p1-lm.adukwai.com, webapi.qmai.cn, miniapp.qmai.cn, appapi.51job*.com, cupid.51job*.com, qde.qunar.com, homefront.qunar.com, client.qunar.com, adproxy.autohome.com.cn, app2.autoimg.cn, app.peopleapp.com, stat.peopleapp.com, adstatic.peopleapp.com, ut2.shuqistat.com, sq.sljkj.com, ocean.shuqireader.com, img-tailor.11222.cn, message.shuqireader.com, feedback.uc.cn, *.shuqireader.com, 101.91.69.26, homepage-api.smzdm.com, haojia-api.smzdm.com, app-api.smzdm.com, user-api.smzdm.com, article-api.smzdm.com, qianbao.smzdm.com, s-api.smzdm.com, haojia.m.smzdm.com, *.souhu.com, mpcs.suning.com, image.suning.com, luckman.suning.com, api.sodalife.xyz, mapi.sfbest.com, ccsp-egmas.sf-express.com, ucmp.sf-express.com, mcs-mimp-web.sf-express.com, app.homeinns.com, api.ncarzone.com, ossgw.alicdn.com, zconfig.alibabausercontent.com, api.cloud.189.cn, bid.adview.cn, ccmsupport-sz.tenpay.com, news.ssp.qq.com, sports3.gtimg.com, 4gimg.map.qq.com, btrace.qq.com, api2.helper.qq.com, *.beacon.qq.com, mi.gdt.qq.com, lives.l.qq.com, imgcache.qq.com, mtteve.beacon.qq.com, vv.video.qq.com, qt.qq.com, 3gimg.qq.com, splashqqlive.gtimg.com, qzonestyle.gtimg.cn, discuz.gtimg.cn, bla.gtimg.com, mmgr.gtimg.com, bk.bingo.qq.com, otheve.beacon.qq.com, static.gameplus.qq.com, images.client.vip.xunlei.com, api-shoulei-ssl.xunlei.com, api-marketing.zhinengxiyifang.cn, adsoss.zhinengxiyifang.cn, ads.zhinengxiyifang.cn, ios.wps.cn, mobile-pic.cache.iciba.com, mp.weixin.qq.com, weixin110.qq.com, security.wechat.com, m.you.163.com, yanxuan.nosdn.127.net, ipv4.music.163.com, interface.music.163.com, interface3.music.163.com, interface9.music.163.com, god.gameyw.netease.com, app-conf.ds.163.com, c.m.163.com, dict.youdao.com, api-overmind.youdao.com, cdke.youdao.com, dictvip-business.youdao.com, dsp-impr2.youdao.com, impservice.dictapp.youdao.com, oral.youdao.com, oimage*.ydstatic.com, client.mail.163.com, kaola-haitao.oss.kaolacdn.com, sp.kaola.com, gw.kaola.com, easyreadfs.nosdn.127.net, p.du.163.com, *.music.126.net, img1.126.net, www.icourse163.org, nex.163.com, g1.163.com, interface*.music.163.com, api-miprint.hannto.com, api.indeedpower.com, shopapi.io.mi.com, api-mifit*.huami.com, api.jr.mi.com, edith.xiaohongshu.com, www.xiaohongshu.com, ci.xiaohongshu.com, rec.xiaohongshu.com, so.xiaohongshu.com, m.ctrip.com, ma-adx.ctrip.com, api*.sparke.cn, upload-bbs.mihoyo.com, acs.m.goofish.com, g-acs.m.goofish.com, rr*.googlevideo.com, youtubei.googleapis.com, acs.youku.com, push.m.youku.com, un-acs.youku.com, www.cntv.cn, cdn.cmgadx.com, xyst.yuanfudao.com, mapi-app.bestpay.com.cn, e.weather.com.cn, cloud.189.cn, zt-app.go189.cn, xyz.cnki.net, webappcfg.paas.cmbchina.com, mbmodule-openapi.paas.cmbchina.com, api.zhihu.com, www.zhihu.com, appcloud2.zhihu.com, m-cloud.zhihu.com, zhuanlan.zhihu.com, link.zhihu.com, app.zhuanzhuan.com, app.bilibili.com, bbs-api.miyoushe.com, bbs-api-ab.miyoushe.com, bbs-api-static.miyoushe.com, api.qishui.com, api5-lq.qishui.com, api1.zongheng.com, api2.zongheng.com, apd-vlive.apdcdn.tc.qq.com, interface1.music.163.com, interface2.music.163.com, interface4.music.163.com, interface5.music.163.com, interface6.music.163.com, interface7.music.163.com, interface8.music.163.com
